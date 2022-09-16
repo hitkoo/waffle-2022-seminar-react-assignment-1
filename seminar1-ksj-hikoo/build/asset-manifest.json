@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "http://waffle-seminar1.s3-website.ap-northeast-2.amazonaws.com/static/css/main.fbc4f3fd.css",
+    "main.js": "http://waffle-seminar1.s3-website.ap-northeast-2.amazonaws.com/static/js/main.1f172c02.js",
+    "static/js/27.df132e73.chunk.js": "http://waffle-seminar1.s3-website.ap-northeast-2.amazonaws.com/static/js/27.df132e73.chunk.js",
+    "static/media/delete.svg": "http://waffle-seminar1.s3-website.ap-northeast-2.amazonaws.com/static/media/delete.be759720ea1591bab51714531ae16e6d.svg",
+    "index.html": "http://waffle-seminar1.s3-website.ap-northeast-2.amazonaws.com/index.html",
+    "static/media/waffle_logo.svg": "http://waffle-seminar1.s3-website.ap-northeast-2.amazonaws.com/static/media/waffle_logo.79fe01eb9b01bd709c438d7aed32cf8f.svg"
+  },
+  "entrypoints": [
+    "static/css/main.fbc4f3fd.css",
+    "static/js/main.1f172c02.js"
+  ]
+}
