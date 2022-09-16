@@ -1,0 +1,19 @@
+.Head {
+    display: flex;
+    flex-direction: row;
+    border-bottom: solid 1px;
+    margin-bottom: 5px;
+    align-items: center;
+    height: 10%;
+    width: 100%;
+  }
+  
+  .Logo{
+    height: 50px;
+    margin: 10px;
+  }
+
+  .headtitle{
+    text-decoration: none;
+    color: black;
+  }
