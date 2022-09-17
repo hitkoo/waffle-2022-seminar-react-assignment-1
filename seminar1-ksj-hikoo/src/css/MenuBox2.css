@@ -1,20 +1,14 @@
-.MenuBox_2 {
+  .MenuBox_2 {
     flex: 2;
-    padding: 0px 15px 15px 15px;
-    height: 80%;
-    border: solid 1px;
-    border-radius: 10px;
+    padding: 0px 15px;
+    height: calc(100% - 15px);
     display: flex;
     flex-direction: column;
+    border: solid 1px;
+    border-radius: 10px;
     align-items: center;
     justify-content: center;
     position: relative;
-  }
-  
-  .SelectBox {
-    width: calc(40% - 30px);
-    height: calc(100% - 30px);
-  
   }
   
   .selectcancle {
@@ -38,8 +32,8 @@
   }
   
   .selectimage {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     border: solid 0.5px #999999;
     border-radius: 30px;
   }
@@ -59,7 +53,7 @@
   .editdelete {
     display: flex;
     align-items: center;
-    height: 7%;
+    height: 50px;
     padding-right: 1%;
   }
   

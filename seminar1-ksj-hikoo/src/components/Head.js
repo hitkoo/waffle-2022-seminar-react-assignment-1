@@ -1,5 +1,6 @@
 import logo from '../asset/waffle_logo.svg';
 import '../css/Head.css';
+import React from 'react'
 
 
 

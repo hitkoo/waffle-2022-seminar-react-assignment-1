@@ -1,3 +1,4 @@
+import React from 'react';
 import '../css/MenuBox2.css';
 import editicon from '../asset/edit.png';
 import deleteicon from '../asset/delete.svg';
@@ -12,16 +13,14 @@ function MenuBox2({ selectMenu, setSelect, showUpdatemodal, showDeletemodal, com
     // 조건문으로 선택된 메뉴가 있을 때만 렌더링하게 설정  
     if (selectMenu !== "") {
         return (
-            <div className='SelectBox'>
-                <div className='MenuBox_2'>
-                    <button className='selectcancle' onClick={() => { setSelect("") }}>x</button>
-                    <img className='selectimage' src={selectMenu.image} alt={logo} onError={handleError} />
-                    <p className='selectname'>{selectMenu.name}</p>
-                    <p className='selectprice'>{comma(selectMenu.price)}원</p>
-                    <div className='editdelete'>
-                        <img className='editicon' src={editicon} onClick={showUpdatemodal} alt={logo} />
-                        <img className='deleteicon' src={deleteicon} onClick={showDeletemodal} alt={logo} />
-                    </div>
+            <div className='MenuBox_2'>
+                <button className='selectcancle' onClick={() => { setSelect("") }}>x</button>
+                <img className='selectimage' src={selectMenu.image} alt={logo} onError={handleError} />
+                <p className='selectname'>{selectMenu.name}</p>
+                <p className='selectprice'>{comma(selectMenu.price)}원</p>
+                <div className='editdelete'>
+                    <img className='editicon' src={editicon} onClick={showUpdatemodal} alt={logo} />
+                    <img className='deleteicon' src={deleteicon} onClick={showDeletemodal} alt={logo} />
                 </div>
             </div>
         )

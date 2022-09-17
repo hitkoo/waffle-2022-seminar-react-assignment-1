@@ -4,6 +4,7 @@ import MenuBox1 from './MenuBox1';
 import MenuBox2 from './MenuBox2';
 import Addmodal from './Addmodal.js';
 import Updatemodal from './Updatemodal.js';
+import React from 'react'
 import Deletemodal from './Deletemodal';
 
 function MenuBox({ search }) {

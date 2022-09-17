@@ -1,6 +1,7 @@
 .MenuBox {
+  flex: 8;
   display: flex;
-  width: 95%;
-  height: 95%;
-}
+  width: 98%;
+  max-height:calc(76vh - 4px);
+ }
 

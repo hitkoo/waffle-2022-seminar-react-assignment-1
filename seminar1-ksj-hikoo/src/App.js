@@ -3,6 +3,7 @@ import MenuBox from './components/MenuBox';
 import Head from './components/Head';
 import Search from './components/Search'
 import { useState } from 'react';
+import React from 'react'
 
 function App() {
 
