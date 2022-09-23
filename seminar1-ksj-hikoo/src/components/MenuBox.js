@@ -11,7 +11,7 @@ function MenuBox({ search }) {
 
   // 여러 자식 컴포넌트에게 쓰이는 state를 전부 부모 컴포넌트에서 정의
   const [maxId, setMaxId] = useState(5);
-  const [menu_list, setMenu] = useState([{
+  const [menuList, setMenu] = useState([{
     "id": 1,
     "name": "초코와플",
     "price": 7000,
@@ -79,7 +79,7 @@ function MenuBox({ search }) {
   return (
     <div className="MenuBox">
       <MenuBox1
-        menu_list={menu_list} showAddmodal={showAddmodal}
+        menuList={menuList} showAddmodal={showAddmodal}
         selectMenu={selectMenu} select={select}
         search={search} comma={comma}>
       </MenuBox1>
@@ -88,29 +88,29 @@ function MenuBox({ search }) {
         showUpdatemodal={showUpdatemodal} showDeletemodal={showDeletemodal}
         comma={comma}>
       </MenuBox2>
-      <Addmodal
+      {AddmodalOpen && <Addmodal
         AddmodalOpen={AddmodalOpen} setAddmodalOpen={setAddmodalOpen}
-        menu_list={menu_list} setMenu={setMenu} maxId={maxId}
+        menuList={menuList} setMenu={setMenu} maxId={maxId}
         setMaxId={setMaxId} enteredNum={enteredNum}
         setEnterdNum={setEnterdNum} enteredName={enteredName}
         setEnterdName={setEnterdName} enteredURL={enteredURL}
         setEnterdURL={setEnterdURL} setSelect={setSelect}>
-      </Addmodal>
-      <Updatemodal
+      </Addmodal>}
+      {UpdatemodalOpen && <Updatemodal
         UpdatemodalOpen={UpdatemodalOpen} setUpdatemodalOpen={setUpdatemodalOpen}
-        menu_list={menu_list} setMenu={setMenu} maxId={maxId}
+        menuList={menuList} setMenu={setMenu} maxId={maxId}
         setMaxId={setMaxId} enteredNum={enteredNum} setEnterdNum={setEnterdNum}
         enteredName={enteredName} setEnterdName={setEnterdName}
         enteredURL={enteredURL} setEnterdURL={setEnterdURL}
         selectMenu={selectMenu} setSelect={setSelect} comma={comma}>
-      </Updatemodal>
-      <Deletemodal
+      </Updatemodal>}
+      {DeletemodalOpen && <Deletemodal
         DeletemodalOpen={DeletemodalOpen} setDeletemodalOpen={setDeletemodalOpen}
-        menu_list={menu_list} setMenu={setMenu} maxId={maxId} setMaxId={setMaxId}
+        menuList={menuList} setMenu={setMenu} maxId={maxId} setMaxId={setMaxId}
         enteredNum={enteredNum} setEnterdNum={setEnterdNum} enteredName={enteredName}
         setEnterdName={setEnterdName} enteredURL={enteredURL} setEnterdURL={setEnterdURL}
         selectMenu={selectMenu} setSelect={setSelect}>
-      </Deletemodal>
+      </Deletemodal>}
     </div>
 
   );

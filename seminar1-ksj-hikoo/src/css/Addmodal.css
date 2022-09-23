@@ -11,7 +11,7 @@
     animation-fill-mode: forwards;
 }
 
-.backgroundClose{
+.backgroundclose{
     position: absolute;
     width: 100vw;
     height: 100vh;
@@ -40,7 +40,7 @@
     animation: modal-show 0.25s;
 }
 
-.cotainerClose{
+.containerclose{
     display: flex;
     flex-direction: column;
     align-items: flex-start;

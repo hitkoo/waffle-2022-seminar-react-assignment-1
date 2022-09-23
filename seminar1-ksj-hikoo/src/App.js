@@ -13,7 +13,7 @@ function App() {
   
   return (
     <div className="Wrap">
-      <Head></Head>
+      <Head/>
       <Search
         search={search} setSearch={setSearch}>
       </Search>

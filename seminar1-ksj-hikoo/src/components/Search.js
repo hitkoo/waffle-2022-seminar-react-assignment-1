@@ -8,17 +8,12 @@ function Search({ search, setSearch }) {
     setSearch(e.target.value);
   }
 
-  //이름 검색 클릭하면 input에 입력하는 상태가 되도록 하는 함수
-  const SearchInput = useRef();
-  function inputfocus() {
-      SearchInput.current.focus()
-  }
 
   return (
     <div className='Search'>
-      <span onClick={()=>{inputfocus()}} className='Searchst'> 이름 검색:</span>
+      <label htmlFor='SearchInput' className='Searchst'> 이름 검색 :</label>
       <div className='Searchmerge'>
-        <input type='text' value={search} id="SearchInput" placeholder="검색어 입력" ref={SearchInput} onChange={SearchChange}></input>
+        <input type='text' value={search} id="SearchInput" placeholder="검색어 입력" onChange={SearchChange}></input>
         <img className='Searchicon' src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt={'돋보기'} />
       </div>
     </div>

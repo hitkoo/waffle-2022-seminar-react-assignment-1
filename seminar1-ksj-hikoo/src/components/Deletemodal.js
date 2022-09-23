@@ -3,7 +3,7 @@ import React from "react";
 import { useRef, useEffect } from 'react';
 import { useState } from 'react'
 
-function Deletemodal({ DeletemodalOpen, setDeletemodalOpen, setMenu, menu_list, enteredNum, setEnterdNum, enteredName, setEnterdName, enteredURL, setEnterdURL, selectMenu, setSelect }) {
+function Deletemodal({ DeletemodalOpen, setDeletemodalOpen, setMenu, menuList, enteredNum, setEnterdNum, enteredName, setEnterdName, enteredURL, setEnterdURL, selectMenu, setSelect }) {
 
   //AddModal과 동일
   const [animate, setAnimate] = useState(false);
@@ -19,10 +19,10 @@ function Deletemodal({ DeletemodalOpen, setDeletemodalOpen, setMenu, menu_list, 
 
   //삭제 버튼 클릭시 실행되는 함수
   const DeleteMenu = () => {
-    const findIndex = menu_list.findIndex(e => e.id === selectMenu.id)
-    menu_list.splice(findIndex, 1)
-    const new_menu_list = menu_list
-    setMenu(new_menu_list)
+    const findIndex = menuList.findIndex(e => e.id === selectMenu.id)
+    menuList.splice(findIndex, 1)
+    const newMenuList = menuList
+    setMenu(newMenuList)
     setSelect("")
     setAnimate(true);
     setTimeout(() => {

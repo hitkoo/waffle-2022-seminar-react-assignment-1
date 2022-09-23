@@ -4,13 +4,14 @@ import React from "react";
 import { useRef, useEffect } from 'react';
 import { useState } from 'react'
 
-function Updatemodal({ UpdatemodalOpen, setUpdatemodalOpen, setMenu, menu_list, enteredNum, setEnterdNum, enteredName, setEnterdName, enteredURL, setEnterdURL, selectMenu, setSelect, comma }) {
+function Updatemodal({ UpdatemodalOpen, setUpdatemodalOpen, setMenu, menuList, enteredNum, setEnterdNum, enteredName, setEnterdName, enteredURL, setEnterdURL, selectMenu, setSelect, comma }) {
 
   //AddModal과 동일
   const [animate, setAnimate] = useState(false);
 
   //AddModal과 동일
   const closeUpdatemodal = () => {
+    
     setAnimate(true);
     setTimeout(() => {
       setAnimate(false);
@@ -19,18 +20,15 @@ function Updatemodal({ UpdatemodalOpen, setUpdatemodalOpen, setMenu, menu_list, 
   }
 
   //AddModal과 동일
-  // ##AddModal과 문제도 동일합니다!!!
   const changeEnteredNum = (e) => {
     const value = e.target.value;
-    const numCheck = /^[0-9,]/.test(value);
-    if (!numCheck && value) {
+    if (!isNaN(value.replaceAll(",", ""))) {
+      const removedCommaValue = Number(value.replaceAll(",", ""));
+      setEnterdNum(removedCommaValue.toLocaleString());
+    } else {
       alert("가격에는 숫자만 입력해야합니다.")
       setEnterdNum("");
     };
-    if (numCheck) {
-      const removedCommaValue = Number(value.replaceAll(",", ""));
-      setEnterdNum(removedCommaValue.toLocaleString());
-    }
   };
 
   //AddModal과 동일
@@ -50,7 +48,7 @@ function Updatemodal({ UpdatemodalOpen, setUpdatemodalOpen, setMenu, menu_list, 
     const name = enteredName
     const price = enteredNum
     const image = enteredURL
-    const checkName = menu_list.findIndex(e => e.name === enteredName)
+    const checkName = menuList.findIndex(e => e.name === enteredName)
     //AddModal과 동일하게 이름 중복을 체크하나, 이름은 변경하지 않았을 때 alert을 출력하지 않도록 logic을 수정
     if (name === '' || price === '') {
       alert("이름과 가격은 필수 입력 사항입니다.")
@@ -60,13 +58,13 @@ function Updatemodal({ UpdatemodalOpen, setUpdatemodalOpen, setMenu, menu_list, 
       setEnterdName("");
     }
     else {
-      const findIndex = menu_list.findIndex(e => e.id === selectMenu.id)
-      const new_menu_list = [...menu_list]
+      const findIndex = menuList.findIndex(e => e.id === selectMenu.id)
+      const newMenuList = [...menuList]
       if (findIndex !== -1) {
-        new_menu_list[findIndex] = { id: selectMenu.id, name: name, price: price, image: image }
+        newMenuList[findIndex] = { id: selectMenu.id, name: name, price: price, image: image }
       }
-      setMenu(new_menu_list);
-      setSelect(new_menu_list[findIndex])
+      setMenu(newMenuList);
+      setSelect(newMenuList[findIndex])
       setEnterdName("");
       setEnterdNum("");
       setEnterdURL("");
@@ -98,10 +96,9 @@ function Updatemodal({ UpdatemodalOpen, setUpdatemodalOpen, setMenu, menu_list, 
     };
   });
 
-  if (!animate && !UpdatemodalOpen) return null;
   return (
-    <div className={!animate ? "background" : "backgroundClose"}>
-      <div ref={UpdatemodalRef} className={!animate ? 'container' : 'cotainerClose'}>
+    <div className={`background${animate ? "close" : ""}`}>
+      <div ref={UpdatemodalRef} className={`container${animate ? "close" : ""}`}>
         <b className='title'>메뉴 수정</b>
         <p className='line'> <b className='subtitle'>이름</b>
           <input id='name' type='text' className='input' placeholder="맛있는와플(필수)" value={enteredName} onChange={changeEnteredName}></input></p>
@@ -110,7 +107,7 @@ function Updatemodal({ UpdatemodalOpen, setUpdatemodalOpen, setMenu, menu_list, 
         <p className='line'> <b className='subtitle'>상품 이미지</b>
           <input id='image' type='text' className='input' placeholder="이미지URL(선택)" value={enteredURL} onChange={changeEnteredURL}></input></p>
         <div className='buttonArea'>
-          <button className='update' onClick={() => { UpdateMenu() }}>
+          <button className='update' onClick={() => UpdateMenu()}>
             수정
           </button>
           <button className='close' onClick={closeUpdatemodal}>
