@@ -1,0 +1,42 @@
+.Menu {
+    display: flex;
+    flex: none;
+    flex-direction: row;
+    border-bottom: solid 1px;
+    height: 50px;
+    align-items: center;
+  }
+  
+  .Menuselect {
+    display: flex;
+    flex: none;
+    flex-direction: row;
+    border-bottom: solid 1px;
+    height: 50px;
+    align-items: center;
+    animation-duration: 0.1s;
+    animation-timing-function: ease-out;
+    animation-name: select;
+    animation-fill-mode: forwards;
+  
+  }
+  
+  .Menu:hover {
+    animation-duration: 0.25s;
+    animation-timing-function: ease-out;
+    animation-name: mouseover;
+    animation-fill-mode: forwards;
+  }
+
+  .MenuID {
+    flex: 2;
+    margin-left: 30px;
+  }
+  
+  .MenuName {
+    flex: 3;
+  }
+  
+  .MenuPrice {
+    flex: 5;
+  }

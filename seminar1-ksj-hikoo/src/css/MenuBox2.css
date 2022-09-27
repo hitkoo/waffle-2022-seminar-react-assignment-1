@@ -1,0 +1,82 @@
+  .MenuBox_2 {
+    flex: 2;
+    padding: 0px 15px;
+    height: calc(100% - 15px);
+    display: flex;
+    flex-direction: column;
+    border: solid 1px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .selectcancle {
+    flex: none;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: #ffffff;
+  
+  }
+  
+  .selectcancle:hover {
+    cursor: pointer;
+  }
+  
+  .selectimage {
+    width: 200px;
+    height: 200px;
+    border: solid 0.5px #999999;
+    border-radius: 30px;
+  }
+  
+  .selectname {
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 0px;
+  }
+  
+  .selectprice {
+    font-size: 16px;
+    margin-bottom: 50px;
+  
+  }
+  
+  .editdelete {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding-right: 1%;
+  }
+  
+  .editicon {
+    height: 100%;
+    background-size: cover;
+    background-attachment: fixed;
+    background-color: #ffffff;
+  
+  }
+  
+  .editicon:hover {
+    cursor: pointer;
+  }
+  
+  .deleteicon {
+    height: 57%;
+    background-size: cover;
+    background-attachment: fixed;
+    background-color: #ffffff;
+  
+  }
+  
+  .deleteicon:hover {
+    cursor: pointer;
+  }

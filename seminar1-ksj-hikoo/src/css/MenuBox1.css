@@ -1,0 +1,79 @@
+.buttonfix{
+  max-height: 75vh;
+  position: relative;
+  flex: 3;
+  display: flex;
+}
+
+.MenuBox_1 {
+  margin: 0px 15px;
+  height: calc(100% - 15px);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border: solid 1px;
+  border-radius: 10px;
+  overflow: auto;
+  max-height: 75vh;
+  }
+  
+  .MenuContent {
+    display: flex;
+    flex-direction: row;
+    border-bottom: solid 1px;
+    background-color: #ED8573;
+    height: 55px;
+    align-items: center;
+    font-size: 18px;
+  }
+  
+  .ID {
+    flex: 2;
+    margin-left: 30px;
+  }
+  
+  .Name {
+    flex: 3;
+  }
+  
+  .Price {
+    flex: 5;
+  }
+   
+  #AddButton {  
+    position: absolute;
+    bottom: 3%;
+    right: 30px;
+    font-size: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25%;
+    width: 60px;
+    height: 60px;
+    background-color: rgb(255, 131, 82);
+    }
+  
+  #AddButton:hover {
+    cursor: pointer;
+  }
+
+  @keyframes mouseover {
+    from {
+      background-color: #ffffff;
+    }
+  
+    to {
+      background-color: rgb(255, 230, 219);
+    }
+  }
+  
+  @keyframes select {
+    from {
+      background-color: rgb(255, 230, 219);
+    }
+  
+    to {
+      background-color: rgb(255, 194, 170);
+    }
+  }
