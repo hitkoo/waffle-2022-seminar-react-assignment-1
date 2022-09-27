@@ -1,26 +1,18 @@
-import './App.css';
-import MenuBox from './components/MenuBox';
-import Head from './components/Head';
-import Search from './components/Search'
-import { useState } from 'react';
-import React from 'react'
+import Store from './components/Store';
+import Home from './components/Home';
+import React from 'react';
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 function App() {
 
-  // 검색기능을 위한 search state 정의
-  const [search, setSearch] = useState("");
-
-  
   return (
-    <div className="Wrap">
-      <Head/>
-      <Search
-        search={search} setSearch={setSearch}>
-      </Search>
-      <MenuBox
-        search={search}>
-      </MenuBox>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' exact element={<Home/>} />
+        <Route path='/store' element={<Store/>}/>
+        <Route path="*" element={<Navigate to='/'/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

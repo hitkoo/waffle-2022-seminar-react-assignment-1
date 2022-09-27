@@ -1,5 +1,5 @@
 import '../css/Search.css';
-import React, { useRef } from 'react';
+import React from 'react';
 
 function Search({ search, setSearch }) {
 
@@ -11,7 +11,7 @@ function Search({ search, setSearch }) {
 
   return (
     <div className='Search'>
-      <label htmlFor='SearchInput' className='Searchst'> 이름 검색 :</label>
+      <label htmlFor='SearchInput' className='Searchst'> 메뉴 이름 검색 :</label>
       <div className='Searchmerge'>
         <input type='text' value={search} id="SearchInput" placeholder="검색어 입력" onChange={SearchChange}></input>
         <img className='Searchicon' src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt={'돋보기'} />

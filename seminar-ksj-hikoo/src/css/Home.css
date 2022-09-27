@@ -1,0 +1,10 @@
+.StoreList{
+    border: solid 1px;
+        flex: 8;
+        width: 98%;
+        max-height:calc(76vh - 4px);   
+}
+
+.tostore{
+    flex: none;
+}
