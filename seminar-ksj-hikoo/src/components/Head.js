@@ -1,6 +1,7 @@
 import logo from '../asset/waffle_logo.svg';
 import '../css/Head.css';
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 
 
@@ -14,7 +15,7 @@ function Head() {
       <a href="https://wafflestudio.com" className='headtitle'><h1>와플스튜디오 메뉴 관리</h1></a>
     </div>
     <div className='LoginTap'>
-      <button>로그인</button>
+      <Link to="/login" ><button>로그인</button></Link>
     </div>
     </div>
   );

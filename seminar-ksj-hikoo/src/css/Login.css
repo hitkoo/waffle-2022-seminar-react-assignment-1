@@ -1,0 +1,53 @@
+.LoginContainer{
+    border: solid 1px;  
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 20px 50px;
+    position: absolute;
+    width: 423px;
+    height: 130px;
+    left: calc(50% - 423px/2);
+    top: calc(50% - 130px/2);
+    background: #FFFFFF;
+}
+
+.LoginLeft{
+    flex: 4;
+}
+
+
+
+.Loginline{
+    width: 100%;
+    height: 12%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.LoginSubtitle {
+    font-weight: bolder;
+    width: 25%;
+}
+
+.LoginInput{
+    padding-left: 10px;
+    width: 80%;
+    height: 150%;
+    border: solid 0.5px #999999;
+    border-radius: 5px;
+}
+
+.LoginRight{
+    flex: 1;
+    display: flex;
+    
+    justify-content: center;
+}
+
+#LoginButton{
+    width: 70px;
+    height: 100px;
+}
