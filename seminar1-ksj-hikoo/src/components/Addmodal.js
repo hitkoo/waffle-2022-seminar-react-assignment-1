@@ -20,10 +20,10 @@ function Addmodal({ AddmodalOpen, setAddmodalOpen, setMenu, menuList, maxId, set
   // 조건문을 통해 숫자외의 값을 입력하면 alert을 띄움 
 
   const changeEnteredNum = (e) => {
-    const value = e.target.value;
-    if (!isNaN(value.replaceAll(",", ""))) {
-      const removedCommaValue = Number(value.replaceAll(",", ""));
-      setEnterdNum(removedCommaValue.toLocaleString());
+    const value = e.target.value.replaceAll(",", "");
+    if (!isNaN(value)) {
+        const removedCommaValue = Number(value);
+        setEnterdNum(removedCommaValue.toLocaleString());
     } else {
       alert("가격에는 숫자만 입력해야합니다.")
       setEnterdNum("");
@@ -55,6 +55,9 @@ function Addmodal({ AddmodalOpen, setAddmodalOpen, setMenu, menuList, maxId, set
     else if (checkName !== -1) {
       alert("중복된 이름은 입력할 수 없습니다.")
       setEnterdName("");
+    }
+    else if (enteredNum.replaceAll(",", "")%10 !== 0){
+      alert("가격의 최소단위는 10원입니다.")
     }
     else {
       const newMenuList = [...menuList, { id: maxId, name: name, price: price, image: image }]

@@ -1,13 +1,19 @@
+.buttonfix{
+  max-height: 75vh;
+  position: relative;
+  flex: 3;
+  display: flex;
+}
+
 .MenuBox_1 {
   margin: 0px 15px;
-  flex: 3;
   height: calc(100% - 15px);
+  flex: 1;
   display: flex;
   flex-direction: column;
   border: solid 1px;
   border-radius: 10px;
   overflow: auto;
-  position: relative;
   max-height: 75vh;
   }
   
@@ -34,12 +40,10 @@
     flex: 5;
   }
    
-   
-  #AddButton {
-    flex: none;
+  #AddButton {  
     position: absolute;
-    right: 20px;
-    bottom: 20px;
+    bottom: 3%;
+    right: 30px;
     font-size: 70px;
     display: flex;
     align-items: center;
@@ -48,8 +52,7 @@
     width: 60px;
     height: 60px;
     background-color: rgb(255, 131, 82);
-  
-  }
+    }
   
   #AddButton:hover {
     cursor: pointer;
