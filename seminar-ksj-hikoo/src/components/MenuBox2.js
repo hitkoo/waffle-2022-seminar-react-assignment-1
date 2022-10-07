@@ -3,6 +3,7 @@ import '../css/MenuBox2.css';
 import editicon from '../asset/edit.png';
 import deleteicon from '../asset/delete.svg';
 import logo from '../asset/waffle_logo.svg';
+import { Link } from 'react-router-dom';
 
 function MenuBox2({ selectMenu, setSelect, showUpdatemodal, showDeletemodal, comma }) {
 
@@ -19,6 +20,7 @@ function MenuBox2({ selectMenu, setSelect, showUpdatemodal, showDeletemodal, com
                 <p className='selectname'>{selectMenu.name}</p>
                 <p className='selectprice'>{comma(selectMenu.price)}원</p>
                 <div className='editdelete'>
+                    <Link to='/detail'><button className='ToDetail'>자세히</button></Link>
                     <img className='editicon' src={editicon} onClick={showUpdatemodal} alt={logo} />
                     <img className='deleteicon' src={deleteicon} onClick={showDeletemodal} alt={logo} />
                 </div>

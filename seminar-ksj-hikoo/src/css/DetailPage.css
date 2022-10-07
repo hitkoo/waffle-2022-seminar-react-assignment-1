@@ -1,0 +1,45 @@
+.DetailWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 95vh;
+}
+
+.toMenu {
+    flex: 1;
+    width: 93%;
+    font-style: normal;
+    display: flex;
+    align-items: center;
+   
+}
+.toMenuText{
+    padding-left: 5px;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 20px;
+    text-decoration-line: none;
+    color: black;
+}
+
+.DetailContainer {
+    flex: 8;
+    width: 93%;
+    display: flex;
+}
+
+.DetailLeft{
+    flex:1;
+    border: 1px solid;
+    border-radius: 10px;
+    margin: 0px 15px;
+}
+
+.DetailRight{
+    flex:1;
+    border: 1px solid;
+    border-radius: 10px;
+    margin: 0px 15px;
+}
