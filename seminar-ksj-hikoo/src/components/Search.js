@@ -1,13 +1,18 @@
 import '../css/Search.css';
 import React from 'react';
+import {useContext} from 'react';
+import {EveryContext} from '../App'
 
-function Search({ search, setSearch }) {
+function Search() {
+  const value = useContext(EveryContext)
+
+  const search = value.search
+  const setSearch = value.setSearch
 
   // onchange에 달려서 input값이 변할때마다 그 값으로 search state를 변경해주는 함수
   const SearchChange = (e) => {
     setSearch(e.target.value);
   }
-
 
   return (
     <div className='Search'>

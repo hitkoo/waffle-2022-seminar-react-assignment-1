@@ -1,5 +1,4 @@
 import '../css/Updatemodal.css';
-// import '../css/Addmodal.css';
 import React from "react";
 import { useRef, useEffect } from 'react';
 import { useState } from 'react'

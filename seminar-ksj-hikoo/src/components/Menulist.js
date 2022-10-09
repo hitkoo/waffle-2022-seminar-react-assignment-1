@@ -1,7 +1,7 @@
 import '../css/Menulist.css';
 import React from 'react'
 
-function MenuBox({ menuList, selectMenu, select, search, comma }) {
+function MenuBox({ menuList, selectMenu, select, search, comma, typetotext }) {
 
     const filteredMenu = menuList.filter((el) => el.name.toString().toLowerCase().indexOf(search.toString().toLowerCase()) > -1)
 
@@ -13,6 +13,7 @@ function MenuBox({ menuList, selectMenu, select, search, comma }) {
                 <div id={list.id} className={"Menu" + (list.id === selectMenu.id ? "select" : "")} onClick={() => { select(list) }}>
                     <span id='selectid' className='MenuID'>{list.id}</span>
                     <span className='MenuName'>{list.name}</span>
+                    <span className='MenuType'>{typetotext(list.type)}</span>
                     <span className='MenuPrice'>{comma(list.price)}</span>
                 </div>
             )) :
@@ -20,6 +21,7 @@ function MenuBox({ menuList, selectMenu, select, search, comma }) {
                 <div id={list.id} className={"Menu" + (list.id === selectMenu.id ? "select" : "")} onClick={() => { select(list) }}>
                     <span id='selectid' className='MenuID'>{list.id}</span>
                     <span className='MenuName'>{list.name}</span>
+                    <span className='MenuType'>{typetotext(list.type)}</span>
                     <span className='MenuPrice'>{comma(list.price)}</span>
                 </div>
             ))

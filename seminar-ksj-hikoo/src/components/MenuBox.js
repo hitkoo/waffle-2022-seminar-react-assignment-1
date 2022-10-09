@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { EveryContext } from '../App';
 import '../css/MenuBox.css';
 import MenuBox1 from './MenuBox1';
 import MenuBox2 from './MenuBox2';
@@ -7,50 +8,26 @@ import Updatemodal from './Updatemodal.js';
 import React from 'react'
 import Deletemodal from './Deletemodal';
 
-function MenuBox({ search }) {
+function MenuBox() {
 
-  // 여러 자식 컴포넌트에게 쓰이는 state를 전부 부모 컴포넌트에서 정의
-  const [maxId, setMaxId] = useState(5);
-  const [menuList, setMenu] = useState([ {
-    "id": 1,
-    "name": "초코와플",
-    "price": 7000,
-    "image": "",
-    "type": "waffle",
-    "description": "초코와플초코와플초코와플"
-  },
-  {
-    "id": 2,
-    "name": "아메리카노",
-    "price": 4000,
-    "image": "",
-    "type": "coffee",
-    "description": "아메리카노아메리카노아메리카노"
-  },
-  {
-    "id": 3,
-    "name": "블루베리스무디",
-    "price": 6000,
-    "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/Blueberries.jpg",
-    "type": "beverage",
-    "description": "블루베리스무디블루베리스무디블루베리스무디"
-  },
-  {
-    "id": 4,
-    "name": "딸기와플",
-    "price": 7000,
-    "image": "https://upload.wikimedia.org/wikipedia/commons/2/29/PerfectStrawberry.jpg",
-    "type": "waffle",
-    "description": "딸기와플딸기와플딸기와플"
-  }]);
-  const [enteredNum, setEnterdNum] = useState("");
-  const [enteredName, setEnterdName] = useState("");
-  const [enteredURL, setEnterdURL] = useState("");
- 
-  const [selectMenu, setSelect] = useState("");
-  const select = (idx) => {
-    setSelect(idx)
-  }
+
+  const value = useContext(EveryContext);
+  
+  const search = value.search
+  const maxId = value.maxId
+  const setMaxId = value.setMaxId
+  const menuList = value.menuList
+  const setMenu = value.setMenu
+  const enteredNum = value.enteredNum
+  const setEnterdNum = value.setEnterdNum
+  const enteredName = value.enteredName
+  const setEnterdName = value.setEnterdName
+  const enteredURL = value.enteredURL
+  const setEnterdURL = value.setEnterdURL
+  const selectMenu = value.selectMenu
+  const setSelect = value.setSelect
+  const select = value.select
+  const comma = value.comma
 
   const [AddmodalOpen, setAddmodalOpen] = useState(false);
   const showAddmodal = () => {
@@ -68,33 +45,11 @@ function MenuBox({ search }) {
     setEnterdURL(selectMenu.image)
   };
 
-  const [DeletemodalOpen, setDeletemodalOpen] = useState(false);
-  const showDeletemodal = () => {
-    setDeletemodalOpen(true);
-    setEnterdName(selectMenu.name)
-    setEnterdNum(selectMenu.price)
-    setEnterdURL(selectMenu.image)
-  };
-
-
-  // 가격을 입력할 때 세자리마다 , 붙여져서 출력되게 만드는 함수
-  const comma = (str) => {
-    str = String(str);
-    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-  }
-
-  // slack에 물어봤던 질문이 이 부분을 작성하면서 넘겨줄 prop이 점점 많아져서 궁금해졌었습니다
   return (
     <div className="MenuBox">
-      <MenuBox1
-        menuList={menuList} showAddmodal={showAddmodal}
-        selectMenu={selectMenu} select={select}
-        search={search} comma={comma}>
+      <MenuBox1 showAddmodal={showAddmodal}>
       </MenuBox1>
-      <MenuBox2
-        selectMenu={selectMenu} setSelect={setSelect}
-        showUpdatemodal={showUpdatemodal} showDeletemodal={showDeletemodal}
-        comma={comma}>
+      <MenuBox2 showUpdatemodal={showUpdatemodal} >
       </MenuBox2>
       {AddmodalOpen && <Addmodal
         AddmodalOpen={AddmodalOpen} setAddmodalOpen={setAddmodalOpen}
@@ -112,13 +67,6 @@ function MenuBox({ search }) {
         enteredURL={enteredURL} setEnterdURL={setEnterdURL}
         selectMenu={selectMenu} setSelect={setSelect} comma={comma}>
       </Updatemodal>}
-      {DeletemodalOpen && <Deletemodal
-        DeletemodalOpen={DeletemodalOpen} setDeletemodalOpen={setDeletemodalOpen}
-        menuList={menuList} setMenu={setMenu} maxId={maxId} setMaxId={setMaxId}
-        enteredNum={enteredNum} setEnterdNum={setEnterdNum} enteredName={enteredName}
-        setEnterdName={setEnterdName} enteredURL={enteredURL} setEnterdURL={setEnterdURL}
-        selectMenu={selectMenu} setSelect={setSelect}>
-      </Deletemodal>}
     </div>
 
   );

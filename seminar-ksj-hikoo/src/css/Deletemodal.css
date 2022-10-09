@@ -85,6 +85,9 @@
     background-color: #FFCFCF;
 }
 
+.delete:hover{
+    cursor: pointer;
+}
 
 
 .deleteclose {
@@ -94,6 +97,11 @@
     border-radius: 5px;
     border: solid 0.2px #999999;
 }
+
+.deleteclose:hover{
+    cursor: pointer;
+}
+
 
 @keyframes fadeIn {
     from {

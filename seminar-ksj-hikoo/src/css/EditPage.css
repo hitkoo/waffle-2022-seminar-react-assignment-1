@@ -1,0 +1,35 @@
+.Editcontainer {
+    margin-top: 100px;
+    border: 1px solid;
+    flex-direction: column;
+    padding: 20px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    width: 400px;
+    height: 450px;
+    overflow: scroll;
+}
+
+.line {
+    width: 80%;
+    height: 18px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-weight: bolder;
+}
+
+.Editline{
+    display: flex;
+    height: 18px;
+    margin: 25px 0px;
+}
+
+.subtitle{
+    font-weight: bolder;
+    flex: 1;
+}
+
+.nametype{
+    flex:3;
+}

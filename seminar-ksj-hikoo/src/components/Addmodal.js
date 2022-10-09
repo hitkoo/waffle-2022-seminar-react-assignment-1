@@ -1,4 +1,3 @@
-import '../css/Addmodal.css';
 import React from "react";
 import { useRef, useEffect, useState } from 'react';
 
@@ -97,12 +96,12 @@ function Addmodal({ AddmodalOpen, setAddmodalOpen, setMenu, menuList, maxId, set
     <div className={`background${animate ? "close" : ""}`}>
       <div ref={AddmodalRef} className={`container${animate ? "close" : ""}`}>
         <b className='title'>메뉴 추가</b>
-        <p className='line'> <b className='subtitle'>이름</b>
-          <input id='name' type='text' className='input' placeholder="맛있는와플(필수)" value={enteredName} onChange={changeEnteredName}></input></p>
-        <p className='line'> <b className='subtitle'>가격</b>
-          <input id='price' type='text' className='input' placeholder="10,000(필수)" value={enteredNum} onChange={changeEnteredNum}></input></p>
-        <p className='line'> <b className='subtitle'>상품 이미지</b>
-          <input id='image' type='text' className='input' placeholder="이미지URL(선택)" value={enteredURL} onChange={changeEnteredURL}></input></p>
+        <p className='line'> <b className='subtitle'>이름</b></p>
+          <input id='name' type='text' className='input' placeholder="맛있는와플(필수)" value={enteredName} onChange={changeEnteredName}></input>
+        <p className='line'> <b className='subtitle'>가격</b></p>
+          <input id='price' type='text' className='input' placeholder="10,000(필수)" value={enteredNum} onChange={changeEnteredNum}></input>
+        <p className='line'> <b className='subtitle'>상품 이미지</b></p>
+          <input id='image' type='text' className='input' placeholder="이미지URL(선택)" value={enteredURL} onChange={changeEnteredURL}></input>
         <div className='buttonArea'>
           <button className='add' onClick={() => addMenu()}>
             추가

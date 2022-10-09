@@ -10,7 +10,7 @@
     justify-content: center;
     position: relative;
   }
-  
+
   .selectcancle {
     flex: none;
     position: absolute;
@@ -24,59 +24,43 @@
     height: 30px;
     border: none;
     background-color: #ffffff;
-  
+
   }
-  
+
   .selectcancle:hover {
     cursor: pointer;
   }
-  
+
   .selectimage {
     width: 200px;
     height: 200px;
     border: solid 0.5px #999999;
     border-radius: 30px;
   }
-  
+
   .selectname {
     font-weight: bold;
     font-size: 25px;
-    margin-bottom: 0px;
   }
-  
+
   .selectprice {
     font-size: 16px;
-    margin-bottom: 50px;
-  
+    margin-bottom: 30px;
+
   }
-  
-  .editdelete {
+
+  .detailview {
     display: flex;
     align-items: center;
     height: 50px;
-    padding-right: 1%;
   }
-  
-  .editicon {
-    height: 100%;
-    background-size: cover;
-    background-attachment: fixed;
+
+  .ToDetail {
     background-color: #ffffff;
-  
+    border: black solid 1px;
+    border-radius: 5px;
   }
-  
-  .editicon:hover {
-    cursor: pointer;
-  }
-  
-  .deleteicon {
-    height: 57%;
-    background-size: cover;
-    background-attachment: fixed;
-    background-color: #ffffff;
-  
-  }
-  
-  .deleteicon:hover {
+
+  .ToDetail:hover{
     cursor: pointer;
   }
