@@ -2,7 +2,7 @@ import '../css/AddPage.css';
 import React from "react";
 import { useRef, useEffect, useState, useContext, } from 'react';
 import { EveryContext } from '../App';
-import { useNavigate } from 'react-router-dom';
+import { Navigateto, comma } from './function';
 import Head from './Head';
 
 function AddPage() {
@@ -28,8 +28,6 @@ function AddPage() {
     const changeEnteredDes = value.changeEnteredDes
     const setEnterdType = value.setEnterdType
     const setEnteredDes = value.setEnteredDes
-
-    const navigate = useNavigate();
 
     // 추가버튼 클릭시 실행되는 함수
     const addMenu = () => {
@@ -60,7 +58,7 @@ function AddPage() {
             setEnterdNum("");
             setEnterdURL("");
             setEnteredDes("");
-            navigate(-1);
+            Navigateto(-1);
         }
     }
 
@@ -89,7 +87,7 @@ function AddPage() {
                     <button className='add' onClick={() => addMenu()}>
                         추가
                     </button>
-                    <button className='close' onClick={() => navigate(-1)}>
+                    <button className='close' onClick={() => Navigateto(-1)}>
                         취소
                     </button>
                 </div>

@@ -1,7 +1,8 @@
 import '../css/Menulist.css';
 import React from 'react'
+import { comma, typetotext } from './function';
 
-function MenuBox({ menuList, selectMenu, select, search, comma, typetotext }) {
+function MenuBox({menuList, selectMenu, select, search,}) {
 
     const filteredMenu = menuList.filter((el) => el.name.toString().toLowerCase().indexOf(search.toString().toLowerCase()) > -1)
 

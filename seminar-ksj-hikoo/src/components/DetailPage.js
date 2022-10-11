@@ -1,5 +1,5 @@
 import React from 'react'
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { EveryContext } from '../App';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Head from './Head';
@@ -14,13 +14,16 @@ import Deletemodal from './Deletemodal';
 
 function DetailPage() {
 
+
+    const [DeletemodalOpen, setDeletemodalOpen] = useState(false);
+    const showDeletemodal = () => {
+      setDeletemodalOpen(true);
+    };
+
     const value = useContext(EveryContext)
     const LoginId = value.LoginId
     const menuList = value.menuList
     const comma = value.comma
-    const DeletemodalOpen = value.DeletemodalOpen
-    const setDeletemodalOpen = value.setDeletemodalOpen
-    const showDeletemodal = value.showDeletemodal
     
     const params = useParams();
     const Index = menuList.findIndex(e => e.id === Number(params.id))
@@ -46,7 +49,7 @@ function DetailPage() {
                     <p className='selectprice'>{comma(ThisPageMenu.price)}원</p>
                     <p className='selectdes'>{ThisPageMenu.description}</p>
                     {LoginId != '' && <div className='editdelete'>
-                        <img className='editicon' src={editicon} onClick={()=>{navigate(`/menus/edit/${params.id}`)}} alt={logo} />
+                        <img className='editicon' src={editicon} onClick={()=>{navigate(`/menus/${params.id}/edit`)}} alt={logo} />
                         <img className='deleteicon' src={deleteicon} onClick={showDeletemodal} alt={logo} />
                     </div>}
                 </div>

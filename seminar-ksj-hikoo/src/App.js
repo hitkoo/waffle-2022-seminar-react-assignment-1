@@ -97,11 +97,6 @@ function App() {
     return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
   }
 
-  const [DeletemodalOpen, setDeletemodalOpen] = useState(false);
-  const showDeletemodal = () => {
-    setDeletemodalOpen(true);
-  };
-
   const typetotext = (type) => {
     if (type == 'waffle') {
       return '와플'
@@ -117,7 +112,7 @@ function App() {
       maxId, setMaxId, menuList, setMenu, enteredNum, changeEnteredNum, setEnterdNum,
       enteredName, changeEnteredName, setEnterdName, enteredURL, changeEnteredURL, setEnterdURL,
       enteredDes, changeEnteredDes, setEnteredDes, enteredType, changeEnteredType, setEnterdType,
-      selectMenu, setSelect, select, search, setSearch, DeletemodalOpen, setDeletemodalOpen, showDeletemodal,
+      selectMenu, setSelect, select, search, setSearch,
       comma, typetotext,
     }}>
       <BrowserRouter>
@@ -127,7 +122,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/menus/:id' element={<DetailPage />} />
           <Route path='/menus/new' element={<AddPage />}></Route>
-          <Route path='/menus/edit/:id' element={<EditPage />} />
+          <Route path='/menus/:id/edit' element={<EditPage />} />
           <Route path="*" element={<Navigate to='/' />} />
         </Routes>
       </BrowserRouter>
