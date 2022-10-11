@@ -9,15 +9,14 @@
 }
 
 .Title {
-  flex: 4;
+  flex: 3;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
 .LoginTap {
-  border: solid 1px;
-  flex: 1;
+  flex: 2;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -33,4 +32,35 @@
 .headtitle {
   text-decoration: none;
   color: black;
+}
+
+
+.LoginButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 18px;
+  border: 0.5px gray solid;
+  border-radius: 3px;
+  background-color: white;
+  margin: 0px 3px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 20px;
+}
+
+.LoginStatus {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 20px;
+  margin-right: 5px;
+}
+
+.LoginIdBold{
+  font-weight: bolder
 }

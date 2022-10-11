@@ -46,6 +46,7 @@ function App() {
 
 
   const [LoginId, setLoginId] = useState("");
+  const [StoreId, setStoreId] = useState("");
   const [maxId, setMaxId] = useState(5);
   const [menuList, setMenu] = useState(initialMenu);
   const [enteredNum, setEnterdNum] = useState("");
@@ -112,7 +113,7 @@ function App() {
   }
 
   return (
-    <EveryContext.Provider value={{LoginId, setLoginId,
+    <EveryContext.Provider value={{LoginId, setLoginId, StoreId, setStoreId,
       maxId, setMaxId, menuList, setMenu, enteredNum, changeEnteredNum, setEnterdNum,
       enteredName, changeEnteredName, setEnterdName, enteredURL, changeEnteredURL, setEnterdURL,
       enteredDes, changeEnteredDes, setEnteredDes, enteredType, changeEnteredType, setEnterdType,

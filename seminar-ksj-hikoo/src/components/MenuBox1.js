@@ -11,6 +11,7 @@ function MenuBox1() {
 
   const value = useContext(EveryContext);
 
+  const LoginId = value.LoginId
   const search = value.search
   const menuList = value.menuList
   const selectMenu = value.selectMenu
@@ -45,7 +46,7 @@ function MenuBox1() {
           <div className='Price'><b>가격</b></div>
         </div>
         <Menulist menuList={menuList} selectMenu={selectMenu} select={select} search={search} comma={comma} typetotext={typetotext} ></Menulist>
-        <img id='AddButton'src={add} alt={logo} onClick={() => OpenAddPage()}></img>
+        {LoginId!='' && <img id='AddButton'src={add} alt={logo} onClick={() => OpenAddPage()}></img>}
 
       </div>
     </div>

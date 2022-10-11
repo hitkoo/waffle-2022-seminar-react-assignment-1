@@ -15,6 +15,7 @@ import Deletemodal from './Deletemodal';
 function DetailPage() {
 
     const value = useContext(EveryContext)
+    const LoginId = value.LoginId
     const menuList = value.menuList
     const comma = value.comma
     const DeletemodalOpen = value.DeletemodalOpen
@@ -44,10 +45,10 @@ function DetailPage() {
                     <p className='selectname'>{ThisPageMenu.name}</p>
                     <p className='selectprice'>{comma(ThisPageMenu.price)}원</p>
                     <p className='selectdes'>{ThisPageMenu.description}</p>
-                    <div className='editdelete'>
+                    {LoginId != '' && <div className='editdelete'>
                         <img className='editicon' src={editicon} onClick={()=>{navigate(`/menus/edit/${params.id}`)}} alt={logo} />
                         <img className='deleteicon' src={deleteicon} onClick={showDeletemodal} alt={logo} />
-                    </div>
+                    </div>}
                 </div>
                 <div className='DetailRight'></div>
             </div>

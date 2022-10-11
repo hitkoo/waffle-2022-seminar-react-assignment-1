@@ -17,7 +17,7 @@
     background: #FFFFFF;
     border-radius: 10px;
     width: 400px;
-    height: 500px;
+    height: 50vh;
     overflow: scroll;
 }
 
@@ -127,7 +127,7 @@
     line-height: 18px;
     padding-top: 5px;
     padding-left: 10px;
-    width: 97%;
+    width: 95%;
     height: 100px;
     border: solid 0.5px #999999;
     border-radius: 5px;
