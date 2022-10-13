@@ -1,14 +1,14 @@
 import '../css/Home.css';
 import Head from './Head';
 import Search from './Search'
-import { useState, useContext } from 'react';
-import { EveryContext } from '../App';
+import { useContext } from 'react';
+import { IDContext } from '../App';
 import React from 'react'
-import { Navigate, Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
 
-  const value = useContext(EveryContext)
+  const value = useContext(IDContext)
   const setStoreId = value.setStoreId
   const navigate = useNavigate();
 

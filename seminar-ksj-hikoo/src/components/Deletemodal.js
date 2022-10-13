@@ -1,13 +1,13 @@
 import '../css/Deletemodal.css';
 import React from "react";
 import { useRef, useEffect, useContext } from 'react';
-import { EveryContext } from '../App';
+import { MenuContext } from '../App';
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 function Deletemodal({ DeletemodalOpen, setDeletemodalOpen }) {
 
-  const value = useContext(EveryContext)
+  const value = useContext(MenuContext)
 
   const menuList = value.menuList
   const selectMenu = value.selectMenu

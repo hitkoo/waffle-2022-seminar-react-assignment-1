@@ -1,33 +1,26 @@
 import React, { useContext } from 'react'
-import { EveryContext } from '../App';
+import { MenuContext, IDContext } from '../App';
 import '../css/MenuBox1.css';
 import Menulist from './Menulist.js';
 import add from '../asset/add.svg';
 import logo from '../asset/waffle_logo.svg'
-import { Navigateto } from './function';
+import {useNavigate} from 'react-router-dom';
 
 function MenuBox1() {
-
-  const value = useContext(EveryContext);
-
-  const LoginId = value.LoginId
+  
+  const value = useContext(MenuContext);
   const search = value.search
   const menuList = value.menuList
   const selectMenu = value.selectMenu
-  const select = value.select
-  const setEnterdName = value.setEnterdName
-  const setEnterdNum = value.setEnterdNum
-  const setEnterdURL = value.setEnterdURL
-  const setEnterdType = value.setEnterdType
-  const setEnteredDes = value.setEnteredDes
+  const setSelect = value.setSelect
+
+  const value2 = useContext(IDContext)
+  const LoginStatus = value2.LoginStatus
+
+  const navigate = useNavigate()
 
   const OpenAddPage = () => {
-    setEnterdName("");
-    setEnterdNum("");
-    setEnterdURL("");
-    setEnterdType("");
-    setEnteredDes("");
-    Navigateto('/menus/new')
+    navigate('/menus/new')
   }
 
   //menuList state를 활용해서 메뉴 목록을 띄워주는 부분은 하위 컴포넌트로 넘김
@@ -41,8 +34,8 @@ function MenuBox1() {
           <div className='Type'><b>종류</b></div>
           <div className='Price'><b>가격</b></div>
         </div>
-        <Menulist menuList={menuList} selectMenu={selectMenu} select={select} search={search}></Menulist>
-        {LoginId!='' && <img id='AddButton'src={add} alt={logo} onClick={() => OpenAddPage()}></img>}
+        <Menulist menuList={menuList} selectMenu={selectMenu} setSelect={setSelect} search={search}></Menulist>
+        {LoginStatus.isLogin && <img id='AddButton'src={add} alt={logo} onClick={() => OpenAddPage()}></img>}
 
       </div>
     </div>
