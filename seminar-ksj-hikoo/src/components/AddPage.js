@@ -59,9 +59,9 @@ function AddPage() {
             alert("가격의 최소단위는 10원입니다.")
         }
         else {
-            const newMenuList = [...menuList, { id: maxId, name: name, price: price, image: image, type: type, description: des }]
+            const newMenuList = [...menuList, { id: maxId, name: name, price: Number(price), image: image, type: type, description: des }]
             setMenu(newMenuList);
-            setSelect({ id: maxId, name: name, price: price, image: image })
+            setSelect({ id: maxId, name: name, price: Number(price), image: image })
             setMaxId(maxId + 1);
             navigate(-1);
         }

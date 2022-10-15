@@ -54,7 +54,7 @@ function EditPage() {
         } else {
             const newMenuList = [...menuList]
             if (Index !== -1) {
-                newMenuList[Index] = { id: ThisPageMenu.id, name: ThisPageMenu.name, price: price, image: image, type: ThisPageMenu.type, description: des }
+                newMenuList[Index] = { id: ThisPageMenu.id, name: ThisPageMenu.name, price: Number(price), image: image, type: ThisPageMenu.type, description: des }
             }
             setMenu(newMenuList);
             setSelect(newMenuList[Index])
