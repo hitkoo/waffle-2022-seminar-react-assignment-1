@@ -4,7 +4,7 @@ import '../css/MenuBox1.css';
 import Menulist from './Menulist.js';
 import add from '../asset/add.svg';
 import logo from '../asset/waffle_logo.svg'
-import {useNavigate} from 'react-router-dom';
+import {useNavigate,useParams} from 'react-router-dom';
 
 function MenuBox1() {
   
@@ -13,6 +13,7 @@ function MenuBox1() {
   const menuList = value.menuList
   const selectMenu = value.selectMenu
   const setSelect = value.setSelect
+  const param = useParams();
 
   const value2 = useContext(IDContext)
   const LoginStatus = value2.LoginStatus
@@ -35,7 +36,7 @@ function MenuBox1() {
           <div className='Price'><b>가격</b></div>
         </div>
         <Menulist menuList={menuList} selectMenu={selectMenu} setSelect={setSelect} search={search}></Menulist>
-        {LoginStatus.isLogin && <img id='AddButton'src={add} alt={logo} onClick={() => OpenAddPage()}></img>}
+        {LoginStatus.UserID == param.owner && <img id='AddButton'src={add} alt={logo} onClick={() => OpenAddPage()}></img>}
 
       </div>
     </div>

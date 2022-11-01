@@ -1,10 +1,29 @@
-.StoreList{
-    border: solid 1px;
-        flex: 8;
-        width: 98%;
-        max-height:calc(76vh - 4px);   
+.StoreList {
+    width: 98%;
+    max-height: calc(76vh - 4px);
 }
 
-.tostore{
+.Owner {
+    float: left;
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 200px;
+    align-items: center;
+    margin: 10px;
+}
+
+.Owner:hover {
+    animation-duration: 0.25s;
+    animation-timing-function: ease-out;
+    animation-name: mouseover;
+    animation-fill-mode: forwards;
+}
+
+.OwnersContainer{
+    /* border: 1px solid; */
+}
+.tostore {
     flex: none;
 }

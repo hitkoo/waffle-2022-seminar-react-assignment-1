@@ -8,7 +8,7 @@ function Menulist({menuList, selectMenu, setSelect, search}) {
 
       const ShowMenuList = (menu) =>{
         return (menu.map((list) => (
-          <div id={list.id} className={"Menu" + (list.id === selectMenu.id ? "select" : "")} onClick={()=>setSelect(list)}>
+          <div key={list.id} className={"Menu" + (list.name === selectMenu.name ? "select" : "")} onClick={()=>setSelect(list)}>
               <span id='selectid' className='MenuID'>{list.id}</span>
               <span className='MenuName'>{list.name}</span>
               <span className='MenuType'>{typetotext(list.type)}</span>

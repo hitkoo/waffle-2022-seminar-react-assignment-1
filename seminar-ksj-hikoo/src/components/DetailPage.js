@@ -25,15 +25,15 @@ function DetailPage() {
 
     const value = useContext(MenuContext)
     const menuList = value.menuList
-
+    const setSelect = value.setSelect
+   
     const value2 = useContext(IDContext)
     const LoginStatus = value2.LoginStatus
+    const StoreId = value2.StoreId
 
     const params = useParams();
     const Index = FindMenubyID(menuList, params.id)
-    console.log(Index)
     const ThisPageMenu = menuList[Index]  
-
     const handleError = (e) => {
         e.target.src = logo;
     }
@@ -49,8 +49,8 @@ function DetailPage() {
        <div className='DetailWrap'>
             <Head />
             <div className='toMenu'>
-                <Link to='/store/1'><img className='ArrowBack' src={ArrowBack} alt={logo} /></Link>
-                <Link to='/store/1' className='toMenuText'>메뉴 목록</Link>
+                <img className='ArrowBack' src={ArrowBack} alt={logo} onClick={()=>{setSelect([menuList[FindMenubyID(menuList, params.id)]]); navigate(`/store/${StoreId}`)}}/>
+                <span className='toMenuText' onClick={()=>{navigate(`/store/${StoreId}`)}}>메뉴 목록</span>
             </div>
             <div className='DetailContainer'>
                 <div className='DetailLeft'>
@@ -58,7 +58,7 @@ function DetailPage() {
                     <p className='selectname'>{ThisPageMenu.name}</p>
                     <p className='selectprice'>{ThisPageMenu.price.toLocaleString()}원</p>
                     <p className='selectdes'>{ThisPageMenu.description}</p>
-                    {LoginStatus.isLogin && <div className='editdelete'>
+                    {StoreId == LoginStatus.UserID && <div className='editdelete'>
                         <img className='editicon' src={editicon} onClick={()=>{navigate(`/menus/${params.id}/edit`)}} alt={logo} />
                         <img className='deleteicon' src={deleteicon} onClick={showDeletemodal} alt={logo} />
                     </div>}

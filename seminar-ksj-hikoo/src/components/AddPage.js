@@ -3,7 +3,9 @@ import React from "react";
 import { useState, useContext, useEffect } from 'react';
 import { IDContext, MenuContext } from '../App';
 import { useNavigate } from 'react-router-dom';
+import { FindMenubyName } from './function';
 import Head from './Head';
+import axios from 'axios';
 
 function AddPage() {
 
@@ -17,6 +19,7 @@ function AddPage() {
 
     const value2 = useContext(IDContext)
     const LoginStatus = value2.LoginStatus
+    const StoreId = value2.StoreId
 
     const [inputs, setInputs] = useState({ enteredNum: "", enteredName: "", enteredType: "", enteredURL: "", enteredDes: "" })
     const { enteredNum, enteredName, enteredType, enteredURL, enteredDes } = inputs
@@ -27,7 +30,7 @@ function AddPage() {
             const numvalue = value.replaceAll(",", "");
             if (!isNaN(numvalue)) {
                 const removedCommaValue = Number(numvalue);
-                setInputs({ ...inputs, [name]: removedCommaValue.toLocaleString()})
+                setInputs({ ...inputs, [name]: removedCommaValue.toLocaleString() })
             } else {
                 alert("가격에는 숫자만 입력해야합니다.")
                 setInputs({ ...inputs, [name]: "" })
@@ -53,29 +56,52 @@ function AddPage() {
         }
         else if (checkName !== -1) {
             alert("중복된 이름은 입력할 수 없습니다.")
-            setInputs({...inputs, 'enteredName' : ""});
+            setInputs({ ...inputs, 'enteredName': "" });
         }
         else if (enteredNum.replaceAll(",", "") % 10 !== 0) {
             alert("가격의 최소단위는 10원입니다.")
         }
         else {
-            const newMenuList = [...menuList, { id: maxId, name: name, price: Number(price), image: image, type: type, description: des }]
-            setMenu(newMenuList);
-            setSelect({ id: maxId, name: name, price: Number(price), image: image })
-            setMaxId(maxId + 1);
-            navigate(-1);
+            axios
+                .post('https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/', {
+                    "name": name,
+                    "type": type,
+                    "price": Number(price),
+                    "image": image,
+                    "description": des
+                }, {
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${LoginStatus.Token}`
+                    }
+                })
+                .then(() => {
+                    axios
+                        .get('https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/', { params: { owner: StoreId } })
+                        .then((res) => {
+                            setMenu(res.data.data)
+                            setSelect(menuList[FindMenubyName(menuList, name)])
+                            navigate(`/store/${StoreId}`);
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        })
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
     }
 
     useEffect(() => {
-        if (!LoginStatus.isLogin){
+        if (!LoginStatus.isLogin) {
             alert('로그인 후 이용해주세요')
             navigate(-1)
         }
-    },[])
+    }, [])
 
 
-    return ( LoginStatus.isLogin &&
+    return (LoginStatus.isLogin &&
         <div className='AddWrap'>
             <Head />
             <div className='buttonfix'>
@@ -84,7 +110,7 @@ function AddPage() {
                     <p className='line'>이름</p>
                     <input id='name' name='enteredName' type='text' className='input' placeholder="맛있는와플(필수)" value={enteredName} onChange={changeInputs}></input>
                     <p className='line'>종류</p>
-                    <select id={`type${enteredType === '' ? "no" : ""}`} name='enteredType' type='text' defaultvalue={enteredType} onChange={changeInputs}>
+                    <select id={`type${enteredType === '' ? "no" : ""}`} name='enteredType' type='text' value={enteredType} onChange={changeInputs}>
                         <option key="" value="" disabled selected hidden>상품의 종류를 선택하세요(필수)</option>
                         <option key='waffle' value='waffle'>와플</option>
                         <option key='beverage' value='beverage'>음료</option>
