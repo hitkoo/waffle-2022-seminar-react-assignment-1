@@ -1311,6 +1311,11 @@
   "resolved" "https://registry.npmjs.org/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz"
   "version" "1.1.3"
 
+"@remix-run/router@1.0.1":
+  "integrity" "sha512-eBV5rvW4dRFOU1eajN7FmYxjAIVz/mRHgUE9En9mBn6m3mulK3WTR5C3iQhL9MZ14rWAq+xOlEaCkDiW0/heOg=="
+  "resolved" "https://registry.npmjs.org/@remix-run/router/-/router-1.0.1.tgz"
+  "version" "1.0.1"
+
 "@sinclair/typebox@^0.24.1":
   "integrity" "sha512-Xint60L8rF0+nRy+6fCjW9jQMmu7fTpbwTBrXZiK6eq/RHDJS7LvWX/0oXC8O7fCePmrY/XdfaTv2HiUDeCq4g=="
   "resolved" "https://registry.npmjs.org/@sinclair/typebox/-/typebox-0.24.40.tgz"
@@ -9216,7 +9221,7 @@
     "strip-ansi" "5.0.0"
     "text-table" "0.2.0"
 
-"react-dom@^18.0.0", "react-dom@^18.2.0":
+"react-dom@^18.0.0", "react-dom@^18.2.0", "react-dom@>=16.8":
   "integrity" "sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   "version" "18.2.0"
@@ -9243,6 +9248,21 @@
   "integrity" "sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w=="
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   "version" "18.2.0"
+
+"react-router-dom@^6.4.1":
+  "integrity" "sha512-MY7NJCrGNVJtGp8ODMOBHu20UaIkmwD2V3YsAOUQoCXFk7Ppdwf55RdcGyrSj+ycSL9Uiwrb3gTLYSnzcRoXww=="
+  "resolved" "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.4.1.tgz"
+  "version" "6.4.1"
+  dependencies:
+    "@remix-run/router" "1.0.1"
+    "react-router" "6.4.1"
+
+"react-router@6.4.1":
+  "integrity" "sha512-OJASKp5AykDWFewgWUim1vlLr7yfD4vO/h+bSgcP/ix8Md+LMHuAjovA74MQfsfhQJGGN1nHRhwS5qQQbbBt3A=="
+  "resolved" "https://registry.npmjs.org/react-router/-/react-router-6.4.1.tgz"
+  "version" "6.4.1"
+  dependencies:
+    "@remix-run/router" "1.0.1"
 
 "react-scripts@^2.1.3":
   "integrity" "sha512-JASD0QVVgSVleVhA9TeA+UBx+shq887hm/L+09qjZLrqIUvJZHZU+oOnhMFGot02Yop+LKfkvf9KSsTNlu/Rwg=="
@@ -9299,7 +9319,7 @@
   optionalDependencies:
     "fsevents" "1.2.4"
 
-"react@^18.0.0", "react@^18.2.0":
+"react@^18.0.0", "react@^18.2.0", "react@>=16.8":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"

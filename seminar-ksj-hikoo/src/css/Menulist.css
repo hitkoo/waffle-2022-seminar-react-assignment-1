@@ -37,6 +37,10 @@
     flex: 3;
   }
   
+  .MenuType {
+    flex: 3;
+  }
+  
   .MenuPrice {
     flex: 5;
   }
