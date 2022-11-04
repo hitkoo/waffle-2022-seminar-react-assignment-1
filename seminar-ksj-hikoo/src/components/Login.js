@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import { IDContext } from '../App';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
 
 
 function Login() {
@@ -36,18 +37,18 @@ function Login() {
                     navigate(-1);
                 })
                 .catch((error)=>{
-                    alert(error)
+                    toast.warn('아이디 혹은 비밀번호가 잘못됐습니다');
                 });               
         }
         else {
-            alert("아이디와 비밀번호를 입력하세요")
+            toast.warn('아이디와 비밀번호를 입력해주세요');
         }
     }
 
     useEffect(() => {
-        if (LoginStatus.LoginID) {
-            alert("로그인 되어있습니다.")
-            navigate(-1)
+        if (localStorage.getItem('login') !=  null) {
+            toast.warn('이미 로그인 되어있습니다');
+            navigate(`/`)
         }
     }, [])
 

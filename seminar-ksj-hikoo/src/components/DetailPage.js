@@ -76,7 +76,7 @@ function DetailPage() {
                 </div>
             </div>
             {DeletemodalOpen && <Deletemodal
-                DeletemodalOpen={DeletemodalOpen} setDeletemodalOpen={setDeletemodalOpen} ThisPageMenu={ThisPageMenu} params={params} StoreStatus={StoreStatus}>
+                DeletemodalOpen={DeletemodalOpen} setDeletemodalOpen={setDeletemodalOpen} ThisPageMenu={ThisPageMenu} params={params} StoreStatus={StoreStatus} MenuOrReview="Menu">
             </Deletemodal>}
         </div>
     )

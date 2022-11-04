@@ -3016,6 +3016,11 @@ clone-deep@^2.0.1:
     kind-of "^6.0.0"
     shallow-clone "^1.0.0"
 
+clsx@^1.1.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
+  integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
+
 co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.npmjs.org/co/-/co-4.6.0.tgz"
@@ -9130,6 +9135,11 @@ react-icons@^4.6.0:
   resolved "https://registry.npmjs.org/react-icons/-/react-icons-4.6.0.tgz"
   integrity sha512-rR/L9m9340yO8yv1QT1QurxWQvWpbNHqVX0fzMln2HEb9TEIrQRGsqiNFQfiv9/JEUbyHmHPlNTB2LWm2Ttz0g==
 
+react-intersection-observer@^9.4.0:
+  version "9.4.0"
+  resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-9.4.0.tgz#f6b6e616e625f9bf255857c5cba9dbf7b1825ec7"
+  integrity sha512-v0403CmomOVlzhqFXlzOxg0ziLcVq8mfbP0AwAcEQWgZmR2OulOT79Ikznw4UlB3N+jlUYqLMe4SDHUOyp0t2A==
+
 react-is@^16.13.1:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
@@ -9219,6 +9229,13 @@ react-simple-star-rating@^5.1.6:
   version "5.1.6"
   resolved "https://registry.yarnpkg.com/react-simple-star-rating/-/react-simple-star-rating-5.1.6.tgz#e395d087f52b4e26ee7d7adb8b4c9dafa12c3b6e"
   integrity sha512-kRLLqkXRI8qk/9hXlsXviEE9E5gwiIdGyeNToVspbPvm1Asmv6YFNFMG6nr1VtqMajWMWS5PEruy15m+W5W2Iw==
+
+react-toastify@8.0.3:
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-8.0.3.tgz#7fbf65f69ec357aab8dd03c1496f9177aa92409a"
+  integrity sha512-rv3koC7f9lKKSkdpYgo/TGzgWlrB/aaiUInF1DyV7BpiM4kyTs+uhu6/r8XDMtBY2FOIHK+FlK3Iv7OzpA/tCA==
+  dependencies:
+    clsx "^1.1.1"
 
 react@^18.2.0:
   version "18.2.0"

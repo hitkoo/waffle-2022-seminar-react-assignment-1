@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { FindMenubyName } from './function';
 import Head from './Head';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddPage() {
 
@@ -29,7 +31,7 @@ function AddPage() {
                 const removedCommaValue = Number(numvalue);
                 setInputs({ ...inputs, [name]: removedCommaValue.toLocaleString() })
             } else {
-                alert("가격에는 숫자만 입력해야합니다.")
+                toast.warn("가격에는 숫자만 입력해야합니다");
                 setInputs({ ...inputs, [name]: "" })
             };
         } else {
@@ -44,17 +46,11 @@ function AddPage() {
         const price = enteredNum.replaceAll(",", "")
         const image = enteredURL
         const des = enteredDes
-        const checkName = menuList.findIndex(e => e.name === enteredName)
-        //메뉴 이름 중복을 확인하는 logic
         if (name === '' || price === '' || type === '') {
-            alert("이름, 종류, 가격은 필수 입력 사항입니다.")
-        }
-        else if (checkName !== -1) {
-            alert("중복된 이름은 입력할 수 없습니다.")
-            setInputs({ ...inputs, 'enteredName': "" });
+            toast.warn("이름, 종류, 가격은 필수 입력 사항입니다.");
         }
         else if (enteredNum.replaceAll(",", "") % 10 !== 0) {
-            alert("가격의 최소단위는 10원입니다.")
+            toast.warn('가격의 최소 단위는 10원입니다.');
         }
         else {
             if (JSON.parse(localStorage.getItem('login')) != null) {
@@ -77,23 +73,28 @@ function AddPage() {
                             .then((res) => {
                                 setMenu(res.data.data)
                                 setSelect(menuList[FindMenubyName(menuList, name)])
+                                toast.success('메뉴 추가에 성공했습니다');
                                 navigate(`/store/${StoreStatus.id}`);
                             })
                             .catch((error) => {
-                                console.log(error)
+                                toast.success('메뉴 목록 불러오기에 실패했습니다');
+                                navigate(`/store/${StoreStatus.id}`);
                             })
                     })
                     .catch((error) => {
                         console.log(error)
+                        toast.error('메뉴 추가에 실패했습니다');
                     })
             } else {
-                navigate(-1);
+                toast.warn('로그인 후 이용해주세요');
+                navigate('/login')
             }
         }
     }
 
     useEffect(() => {
         if (JSON.parse(localStorage.getItem('login')) == null) {
+            toast.warn('로그인 후 이용해주세요');
             navigate('/login')
         } else {
             setStore({

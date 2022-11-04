@@ -34,6 +34,7 @@ function Head() {
 
   return (
     <div className='Head'>
+
       <div className="Title">
         <Link to="/" ><img className="Logo" src={logo} alt="Logo" /></Link>
         {StoreStatus.id == "" ?

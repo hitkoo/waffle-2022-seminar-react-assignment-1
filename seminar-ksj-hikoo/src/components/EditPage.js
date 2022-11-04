@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { typetotext } from './function';
 import axios from 'axios';
 import Loading from './Loading';
+import { ToastContainer, toast } from 'react-toastify';
 
 function EditPage() {
 
@@ -36,7 +37,7 @@ function EditPage() {
                 const removedCommaValue = Number(numvalue);
                 setInputs({ ...inputs, [name]: removedCommaValue.toLocaleString() })
             } else {
-                alert("가격에는 숫자만 입력해야합니다.")
+                toast.warn("가격에는 숫자만 입력해야합니다");
                 setInputs({ ...inputs, [name]: "" })
             };
         } else {
@@ -49,9 +50,9 @@ function EditPage() {
         const image = enteredURL
         const des = enteredDes
         if (price === '' || price === '0') {
-            alert("가격은 필수 입력 사항입니다.")
+            toast.warn("가격은 필수 입력 사항입니다.");
         } else if (enteredNum.replaceAll(",", "") % 10 !== 0) {
-            alert("가격의 최소단위는 10원입니다.")
+            toast.warn("가격의 최소단위는 10원입니다");
         } else {
             if (JSON.parse(localStorage.getItem('login')) != null) {
                 axios
@@ -71,26 +72,28 @@ function EditPage() {
                             .get('https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/', { params: { owner: StoreStatus.id } })
                             .then((res) => {
                                 setMenu(res.data.data)
+                                toast.success('메뉴 수정에 성공했습니다');
                                 navigate(`/menus/${param.id}`);
                             })
                             .catch((error) => {
-                                console.log(error)
+                                toast.error('메뉴 수정에 실패했습니다');
                             })
                     })
                     .catch((error) => {
-                        console.log(error)
+                        toast.error('메뉴 수정에 실패했습니다');
                     })
             } else {
-                navigate(-1)
+                toast.warn('로그인 후 이용해주세요');
+                navigate('/login')
             }
         }
     }
 
     useEffect(() => {
         if (JSON.parse(localStorage.getItem('login')) == null) {
+            toast.warn('로그인 후 이용해주세요');
             navigate('/login')
         } else {
-
             axios
                 .get(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/${param.id}`)
                 .then((res) => {
@@ -109,10 +112,12 @@ function EditPage() {
                         })
                         setLoad(false)
                     } else {
-                        navigate('/')
+                        toast.warn('본인 가게의 메뉴만 수정할 수 있습니다.');
+                        navigate(`/`)
                     }
                 })
                 .catch((error) => {
+                    toast.error('메뉴 불러오기에 실패했습니다');
                     navigate(-1)
                 })
         }

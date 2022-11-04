@@ -7,6 +7,7 @@ import React, { useState, createContext, useEffect } from 'react';
 import { BrowserRouter, Route, Routes, Navigate, json } from "react-router-dom";
 import DetailPage from './components/DetailPage';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 export const IDContext = createContext();
 export const MenuContext = createContext();
@@ -14,7 +15,7 @@ export const MenuContext = createContext();
 function App() {
 
   const [LoginStatus, setLoginStatus] = useState({ IsLogin: false, LoginUser: "", UserID: "", Token: "" });
-  const [StoreStatus, setStore] = useState({id : "", name : "", owner : ""});
+  const [StoreStatus, setStore] = useState({ id: "", name: "", owner: "" });
   const [menuList, setMenu] = useState();
   const [selectMenu, setSelect] = useState("");
   const [search, setSearch] = useState("");
@@ -29,16 +30,13 @@ function App() {
         .then((res) => {
           const token = res.data.access_token;
           setLoginStatus({ IsLogin: true, LoginUser: LoginRefresh.owner.username, UserID: LoginRefresh.owner.id, Token: token })
-          console.log('로그인유지')
         })
         .catch((error) => {
           if (error.toJSON().status == 500) {
             window.location.reload()
-            console.log('500새로고침')
           } else {
             localStorage.removeItem("login")
             setLoginStatus({ IsLogin: false, LoginUser: "", UserID: "", Token: "" })
-            console.log('로그인해제')
           }
         });
     }
@@ -47,6 +45,14 @@ function App() {
   return (
     <IDContext.Provider value={{ LoginStatus, setLoginStatus, StoreStatus, setStore }}>
       <MenuContext.Provider value={{ menuList, setMenu, selectMenu, setSelect, search, setSearch }}>
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          closeOnClick={true}
+          pauseOnHover={false}
+          draggable={true}
+          theme="light" />
         <BrowserRouter>
           <Routes>
             <Route path='/' exact element={<Home />} />

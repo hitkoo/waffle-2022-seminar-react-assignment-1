@@ -4,8 +4,9 @@ import { useRef, useEffect } from 'react';
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
-function Deletemodal({ DeletemodalOpen, setDeletemodalOpen, params, StoreStatus }) {
+function Deletemodal({ DeletemodalOpen, setDeletemodalOpen, params, StoreStatus, MenuOrReview }) {
 
   const navigate = useNavigate();
 
@@ -32,17 +33,22 @@ function Deletemodal({ DeletemodalOpen, setDeletemodalOpen, params, StoreStatus 
         axios
           .get('https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/', { params: { owner: StoreStatus.id } })
           .then((res) => {
-            navigate(`/store/${StoreStatus.id}`);
+            toast.success('메뉴 삭제 성공했습니다');
+            setAnimate(true);
+            setTimeout(() => {
+              setAnimate(false);
+              setDeletemodalOpen(false);
+              navigate(`/store/${StoreStatus.id}`);
+            }, 300);
           })
           .catch((error) => {
             console.log(error)
+            toast.error('메뉴 삭제 실패했습니다');
           })
       })
       .catch((error) => {
-        console.log(error)
+        toast.error('메뉴 삭제 실패했습니다');
       })
-    setAnimate(false)
-    setDeletemodalOpen(false);
   }
 
   const DeletemodalRef = useRef();

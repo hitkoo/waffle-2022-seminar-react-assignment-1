@@ -1,7 +1,6 @@
-
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import '../css/Reviews.css';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import axios from 'axios';
 import Loading from './Loading';
 import { rateToStar, timeForToday, rateToStarBig } from './function';
@@ -9,80 +8,130 @@ import editicon from '../asset/edit.svg';
 import deleteicon from '../asset/delete.svg';
 import logo from '../asset/waffle_logo.svg'
 import { Rating } from 'react-simple-star-rating'
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import Deletemodal from './Deletemodal';
+import { useInView } from "react-intersection-observer"
 
 function Reviews({ ThisPageMenu }) {
 
     const [Load, setLoad] = useState(true);
     const [input, setInputs] = useState("");
-    const [rating, setRating] = useState(0)
-    const [reviews, setReviews] = useState();
+    const [EditEnter, setEditEnter] = useState({ input: "", rating: null });
+    const [rating, setRating] = useState(null)
+    const [reviews, setReviews] = useState([]);
+    const [nextReview, setNextReview] = useState(null);
+    const [ref, inView] = useInView({
+        threshold: 1,
+        delay: 300,
+    });
+    const [selectReview, setSelectReview] = useState("");
+    const navigate = useNavigate();
     const changeInput = (e) => {
         const review = e.target.value
         setInputs(review)
     }
+    const changeEditInput = (e) => {
+        const review = e.target.value
+        setEditEnter({ ...EditEnter, input: review })
+    }
 
-    useEffect(() => {
+    const getReviews = () => {
+        setLoad(true)
         axios
-            .get(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/reviews/`, { params: { menu: ThisPageMenu.id } })
+            .get(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/reviews/`, { params: { count: 10, menu: ThisPageMenu.id } })
             .then((res) => {
                 setReviews(res.data.data)
                 setLoad(false)
-                console.log("리뷰가져오기성공")
+                setNextReview(res.data.next)
+                console.log(res.data.next)
+                console.log('서버에서 리뷰 가져오기')
             })
             .catch((error) => {
-                console.log("리뷰가져오기실패")
+                toast.warn('리뷰 목록을 가져오지 못했습니다');
             })
+    }
+
+    const getMoreReviews = () => {
+        axios
+            .get(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/reviews/`, { params: { from: nextReview, count: 10, menu: ThisPageMenu.id } })
+            .then((res) => {
+                setReviews([...reviews, ...res.data.data])
+                setNextReview(res.data.next)
+                console.log(res.data.next)
+                console.log('서버에서 리뷰 더 가져오기')
+            })
+            .catch((error) => {
+                toast.warn('리뷰 목록을 가져오지 못했습니다');
+            })
+    }
+
+    useEffect(() => {
+        getReviews()
     }, [])
+
+    useEffect(() => {
+        if (inView && !Load) {
+            getMoreReviews()
+        }
+    }, [inView, Load])
 
     const PostReview = () => {
         const content = input
-        const rating = 10
         const menu = ThisPageMenu.id
-        if (JSON.parse(localStorage.getItem('login')) != null) {
-            axios
-                .post(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/reviews/`, {
-                    content: content, rating: rating, menu: menu
-                }, {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${JSON.parse(localStorage.getItem('login')).access_token}`
-                    }
-                })
-                .then(() => {
-                    console.log("리뷰쓰기성공")
-                    window.location.reload()
-                })
-                .catch((error) => {
-                    console.log("리뷰쓰기실패")
-                })
+        if (input == "" || rating == null) {
+            toast.warn('별점과 리뷰를 입력해주세요');
         } else {
-            window.location.reload()
+            if (JSON.parse(localStorage.getItem('login')) != null) {
+                axios
+                    .post(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/reviews/`, {
+                        content: content, rating: (rating * 2).toFixed(), menu: menu
+                    }, {
+                        withCredentials: true,
+                        headers: {
+                            Authorization: `Bearer ${JSON.parse(localStorage.getItem('login')).access_token}`
+                        }
+                    })
+                    .then(() => {
+                        setInputs("")
+                        setRating(null)
+                        getReviews()
+                    })
+                    .catch((error) => {
+                        toast.error('리뷰 생성 실패');
+                    })
+            } else {
+                toast.warn('로그인 후 이용해주세요');
+                navigate('/login')
+            }
         }
     }
 
     const EditReview = () => {
-        const content = input
-        const rating = 10
-        const menu = ThisPageMenu.id
+        const content = EditEnter.input
+        const rate = Number(EditEnter.rating)
         if (JSON.parse(localStorage.getItem('login')) != null) {
             axios
-                .post(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/reviews/`, {
-                    content: content, rating: rating, menu: menu
+                .patch(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/reviews/${selectReview.id}`, {
+                    content: content, rating: (rate * 2).toFixed()
                 }, {
                     withCredentials: true,
                     headers: {
                         Authorization: `Bearer ${JSON.parse(localStorage.getItem('login')).access_token}`
-                    }
+                    },
+                    params: { id: selectReview.id }
                 })
-                .then((res) => {
-                    console.log("리뷰쓰기성공")
-                    window.location.reload()
+                .then(() => {
+                    setEditEnter({ input: "", rating: null })
+                    setSelectReview("")
+                    getReviews()
                 })
                 .catch((error) => {
-                    console.log("리뷰쓰기실패")
+                    toast.error('리뷰 수정 실패');
                 })
         } else {
-            window.location.reload()
+            toast.warn('로그인 후 이용해주세요');
+            navigate('/login')
         }
     }
 
@@ -97,64 +146,104 @@ function Reviews({ ThisPageMenu }) {
                     params: { id: id }
                 })
                 .then((res) => {
-                    console.log("리뷰삭제성공")
-                    window.location.reload()
+                    getReviews()
                 })
                 .catch((error) => {
-                    console.log("리뷰삭제실패")
+                    toast.error('리뷰 삭제 실패');
                 })
         } else {
-            window.location.reload()
+            toast.warn('로그인 후 이용해주세요');
+            navigate('/login')
         }
     }
 
-    const ShowReviews = (list) => {
-        return (
-            list.map((e) => (
-                <div key={e.id} author={e.author.id} className='reviewContent'>
-                    <div className='reviewTop'>
-                        <div className='reviewTopLeft'>
-                            <span className='reviewAuthor'>{e.author.username}</span>
-                            <span className='reviewRate'>{rateToStar(e.rating)}</span>
-                            <span className='reviewTime'>{timeForToday(e.updated_at)}</span>
-                        </div>
-                        {JSON.parse(localStorage.getItem('login')) != null &&
-                            e.author.id == JSON.parse(localStorage.getItem('login')).owner.id &&
-                            <div className='reviewTopRight'>
-                                <img className='reviewEdit' src={editicon} alt={logo} />
-                                <img className='reviewDelete' src={deleteicon} alt={logo} onClick={() => DeleteReview(e.id)} />
-                            </div>
-                        }
-                    </div>
-                    <div className='reviewBottom'>{e.content}</div>
-                </div>
-            )))
-    }
     const handleRating = (rate) => {
         setRating(rate)
     }
-    return (Load ? <Loading /> :
-        <div className={`reviewContainer${JSON.parse(localStorage.getItem('login')) == null ? "" : "Login"}`}>
-            <div className='rateAverage'>
-                <span>평균 별점</span>
-                {rateToStar(9)}
-                <span className='Average'>4.5</span>
-            </div>
-            {ShowReviews(reviews)}
-            {JSON.parse(localStorage.getItem('login')) != null &&
-                <div className='reviewPost'>
-                    <div>
-                        <Rating
-                            onClick={handleRating}
-                            size='25'
-                            allowFraction={true}
-                        /><span className='reviewinputrate'>{rating}</span></div>
-                    <input id='reviewinput' type='text' placeholder='리뷰를 입력하세요' value={input} onChange={changeInput}></input>
-                    <div className='reviewPostButton'>
-                        <button className='reviewadd' onClick={() => PostReview()}>저장</button>
+
+    const handleEditRating = (rate) => {
+        setEditEnter({ ...EditEnter, rating: rate })
+    }
+    const ShowReviews = (list) => {
+        return (
+            list.map((e, idx) => (
+                ((selectReview == "") || (selectReview.id != e.id)) ?
+                    // <div>
+                    <div key={e.id}>
+                        <div className='reviewContent'>
+                            <div className='reviewTop'>
+                                <div className='reviewTopLeft'>
+                                    <span className='reviewAuthor'>{e.author.username}</span>
+                                    <span className='reviewRate'>{rateToStar(e.rating)}</span>
+                                    <span className='reviewTime'>{timeForToday(e.created_at)}
+                                        <span className='isEdit'>{(e.created_at == e.updated_at) ? "" : " 수정됨"}</span>
+                                    </span>
+                                </div>
+                                {JSON.parse(localStorage.getItem('login')) != null &&
+                                    e.author.id == JSON.parse(localStorage.getItem('login')).owner.id &&
+                                    <div className='reviewTopRight'>
+                                        <img className='reviewEdit' src={editicon} alt={logo} onClick={() => { setSelectReview(e); setEditEnter({ input: e.content, rating: e.rating / 2 }); }} />
+                                        <img className='reviewDelete' src={deleteicon} alt={logo} onClick={() => DeleteReview(e.id)} />
+                                    </div>
+                                }
+                            </div>
+                            <div className='reviewBottom'>{e.content}</div>
+                        </div>
+                        {list.length - 1 == idx && list.length >= 10 &&
+                            <div className='scrollTarget' ref={ref}></div>}
+                    </div> :
+                    <div key={e.id} className='reviewEditBox'>
+                        <div>
+                            <Rating
+                                initialValue={EditEnter.rating}
+                                onClick={handleEditRating}
+                                size='25'
+                                allowFraction={true}
+                            /><span className='reviewinputrate'>{EditEnter.rating}</span></div>
+                        <textarea id='reviewinput' type='text' placeholder='리뷰를 입력하세요' value={EditEnter.input} onChange={changeEditInput}></textarea>
+                        <div className='reviewPostButton'>
+                            <button className='reviewadd' onClick={() => EditReview()}>저장</button>
+                            <button className='reviewEditCancle' onClick={() => setSelectReview("")}>취소</button>
+                        </div>
                     </div>
-                </div>}
-        </div>
+
+            )))
+    }
+
+    return (
+        Load ? <Loading /> :
+            <div>
+                <div className='reviewContainer'>
+                    <div className='rateAverage'>
+                        <span>평균 별점</span>
+                        {rateToStar(9)}
+                        <span className='Average'>4.5</span>
+                    </div>
+                    <div className='reviewBox'>
+                        <div className='reviewList'>
+                            {reviews.length == 0 ?
+                                <div>
+                                    <p>등록된 리뷰가 없습니다. 첫 리뷰를 등록해주세요!</p>
+                                </div> :
+                                ShowReviews(reviews)}
+                        </div>
+                        {JSON.parse(localStorage.getItem('login')) != null && selectReview == "" &&
+                            <div className='reviewPost'>
+                                <div>
+                                    <Rating
+                                        onClick={handleRating}
+                                        size='25'
+                                        allowFraction={true}
+                                    /><span className='reviewinputrate'>{rating}</span>
+                                </div>
+                                <textarea id='reviewinput' type='text' placeholder='리뷰를 입력하세요' value={input} onChange={changeInput}></textarea>
+                                <div className='reviewPostButton'>
+                                    <button className='reviewadd' onClick={() => PostReview()}>저장</button>
+                                </div>
+                            </div>}
+                    </div>
+                </div>
+            </div>
     );
 }
 
