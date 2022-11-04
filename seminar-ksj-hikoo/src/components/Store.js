@@ -29,7 +29,6 @@ function Store() {
     .get('https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/', { params: { owner: param.owner } })
     .then((res) => {
       setMenu(res.data.data)
-      console.log('첫메뉴받아오기')
       axios
         .get(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/owners/${param.owner}`, { params: { owner: param.owner } })
         .then((res)=>{
@@ -38,14 +37,12 @@ function Store() {
         })
     })
     .catch((error) => {
-      console.log(error)
     }) 
     :
     axios
       .get('https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/', { params: { owner: param.owner, search: search } })
       .then((res) => {
         setMenu(res.data.data)
-        console.log('검색메뉴받아오기')
         axios
           .get(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/owners/${param.owner}`, { params: { owner: param.owner } })
           .then((res)=>{
@@ -53,7 +50,6 @@ function Store() {
           })
       })
       .catch((error) => {
-        console.log(error)
       })
   }, [param.owner, search])
 

@@ -30,7 +30,7 @@ function Home() {
         setStore({id : "", name : "", ownername : ""})
       })
       .catch((error) => {
-        console.log(error)
+
       }) 
       : axios
       .get("https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/owners/", { params: { name : search } })
@@ -40,7 +40,7 @@ function Home() {
         setStore({id : "", name : "", ownername : ""})
       })
       .catch((error) => {
-        console.log(error)
+
       })
   }, [search])
 

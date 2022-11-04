@@ -19,7 +19,6 @@ function Search() {
       setThrottle(true);
       setTimeout(async () => {
         setSearch(e.target.value)
-        console.log(e.target.value)
         setThrottle(false)
       }, 500)
     }

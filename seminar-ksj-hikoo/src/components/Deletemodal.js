@@ -42,7 +42,6 @@ function Deletemodal({ DeletemodalOpen, setDeletemodalOpen, params, StoreStatus,
             }, 300);
           })
           .catch((error) => {
-            console.log(error)
             toast.error('메뉴 삭제 실패했습니다');
           })
       })

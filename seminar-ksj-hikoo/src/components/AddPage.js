@@ -82,7 +82,6 @@ function AddPage() {
                             })
                     })
                     .catch((error) => {
-                        console.log(error)
                         toast.error('메뉴 추가에 실패했습니다');
                     })
             } else {

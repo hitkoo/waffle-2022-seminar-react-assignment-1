@@ -75,21 +75,3 @@ export const rateToStarBig = (rate) => {
     />
     </div>)
 }
-
-
-// axios
-// .patch("https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/owners/me", {
-//   "store_name": "롤드컵와플",
-//   "store_description": "롤드컵에 절여져서 생각이 이거밖에 안나네요"
-// }, {
-//   withCredentials: true,
-//   headers: {
-//     Authorization: `Bearer ${LoginStatus.Token}`
-//   }
-// })
-// .then(() => {
-//   console.log('가게명 변경완료')
-// })
-// .catch(() => {
-//   console.log('가게명 변경실패')
-// })

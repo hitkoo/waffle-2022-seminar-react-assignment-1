@@ -27,7 +27,6 @@ function Head() {
         localStorage.removeItem('login')
       })
       .catch((error) => {
-        console.log(error)
       })
   }
 
