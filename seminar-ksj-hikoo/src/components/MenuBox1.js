@@ -34,9 +34,10 @@ function MenuBox1() {
           <div className='Name'><b>이름</b></div>
           <div className='Type'><b>종류</b></div>
           <div className='Price'><b>가격</b></div>
+          <div className='Rate'><b>평점</b></div>
         </div>
         <Menulist menuList={menuList} selectMenu={selectMenu} setSelect={setSelect} search={search}></Menulist>
-        {LoginStatus.UserID == param.owner && <img id='AddButton'src={add} alt={logo} onClick={() => OpenAddPage()}></img>}
+        {JSON.parse(localStorage.getItem('login'))!=null && JSON.parse(localStorage.getItem('login')).owner.id == param.owner && <img id='AddButton'src={add} alt={logo} onClick={() => OpenAddPage()}></img>}
 
       </div>
     </div>

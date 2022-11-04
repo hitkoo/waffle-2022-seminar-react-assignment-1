@@ -1,6 +1,6 @@
 import '../css/Menulist.css';
 import React from 'react'
-import { typetotext, FilterMenu } from './function';
+import { typetotext, FilterMenu, rateToStarBig } from './function';
 
 function Menulist({menuList, selectMenu, setSelect, search}) {
 
@@ -13,6 +13,7 @@ function Menulist({menuList, selectMenu, setSelect, search}) {
               <span className='MenuName'>{list.name}</span>
               <span className='MenuType'>{typetotext(list.type)}</span>
               <span className='MenuPrice'>{list.price.toLocaleString()}</span>
+              <span className='MenuRate'>{rateToStarBig(8)}</span>
           </div>
         )))}
       

@@ -7,12 +7,15 @@ import React from 'react'
 import { useNavigate, } from 'react-router-dom';
 import axios from 'axios';
 import Loading from './Loading';
+import { rateToStarBig } from './function';
 
 function Home() {
 
   const [Load, setLoad] = useState(true);
   const [Owners, setOwners] = useState("");
   const navigate = useNavigate();
+  const value = useContext(IDContext)
+  const setStore = value.setStore
 
   useEffect(() => {
     axios
@@ -20,6 +23,7 @@ function Home() {
       .then((res) => {
         setOwners(res.data)
         setLoad(false)
+        setStore({id : "", name : "", ownername : ""})
       })
       .catch((error) => {
         console.log(error)
@@ -28,9 +32,12 @@ function Home() {
 
   const ShowOwnerList = (a) => {
     return (a.map((list) => (
-      <div key={list.id} className="Owner" onClick={() => { navigate(`/store/${list.id}`) }}>
-        <span className='MenuID'>{list.id}</span>
-        <span className='OwnerName'>{list.username}</span>
+      list.store_name != null &&
+      <div key={list.id} className="Store" onClick={() => { navigate(`/store/${list.id}`) }}>
+        <span className='storeName'>{list.store_name}</span>
+        <span className='ownerName'>{list.username}</span>
+        <span className='storeDes'>{list.store_description}</span>
+        <span className='storeRate'>{rateToStarBig(8)}</span>
       </div>
     )))
   }

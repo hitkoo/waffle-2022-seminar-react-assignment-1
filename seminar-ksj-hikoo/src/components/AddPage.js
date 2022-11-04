@@ -11,15 +11,12 @@ function AddPage() {
 
     const navigate = useNavigate()
     const value = useContext(MenuContext)
-    const maxId = value.maxId
-    const setMaxId = value.setMaxId
     const menuList = value.menuList
     const setMenu = value.setMenu
     const setSelect = value.setSelect
-
     const value2 = useContext(IDContext)
-    const LoginStatus = value2.LoginStatus
-    const StoreId = value2.StoreId
+    const StoreStatus = value2.StoreStatus
+    const setStore = value2.setStore
 
     const [inputs, setInputs] = useState({ enteredNum: "", enteredName: "", enteredType: "", enteredURL: "", enteredDes: "" })
     const { enteredNum, enteredName, enteredType, enteredURL, enteredDes } = inputs
@@ -39,8 +36,6 @@ function AddPage() {
             setInputs({ ...inputs, [name]: value })
         }
     }
-
-
 
     // 추가버튼 클릭시 실행되는 함수
     const addMenu = () => {
@@ -62,46 +57,55 @@ function AddPage() {
             alert("가격의 최소단위는 10원입니다.")
         }
         else {
-            axios
-                .post('https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/', {
-                    "name": name,
-                    "type": type,
-                    "price": Number(price),
-                    "image": image,
-                    "description": des
-                }, {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${LoginStatus.Token}`
-                    }
-                })
-                .then(() => {
-                    axios
-                        .get('https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/', { params: { owner: StoreId } })
-                        .then((res) => {
-                            setMenu(res.data.data)
-                            setSelect(menuList[FindMenubyName(menuList, name)])
-                            navigate(`/store/${StoreId}`);
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                        })
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
+            if (JSON.parse(localStorage.getItem('login')) != null) {
+                axios
+                    .post('https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/', {
+                        "name": name,
+                        "type": type,
+                        "price": Number(price),
+                        "image": image,
+                        "description": des
+                    }, {
+                        withCredentials: true,
+                        headers: {
+                            Authorization: `Bearer ${JSON.parse(localStorage.getItem('login')).access_token}`
+                        }
+                    })
+                    .then(() => {
+                        axios
+                            .get('https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/', { params: { owner: StoreStatus.id } })
+                            .then((res) => {
+                                setMenu(res.data.data)
+                                setSelect(menuList[FindMenubyName(menuList, name)])
+                                navigate(`/store/${StoreStatus.id}`);
+                            })
+                            .catch((error) => {
+                                console.log(error)
+                            })
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            } else {
+                navigate(-1);
+            }
         }
     }
 
     useEffect(() => {
-        if (!LoginStatus.isLogin) {
-            alert('로그인 후 이용해주세요')
-            navigate(-1)
+        if (JSON.parse(localStorage.getItem('login')) == null) {
+            navigate('/login')
+        } else {
+            setStore({
+                id: JSON.parse(localStorage.getItem('login')).owner.id,
+                name: JSON.parse(localStorage.getItem('login')).owner.store_name,
+                owner: JSON.parse(localStorage.getItem('login')).owner.username
+            })
         }
     }, [])
 
 
-    return (LoginStatus.isLogin &&
+    return (
         <div className='AddWrap'>
             <Head />
             <div className='buttonfix'>
@@ -133,7 +137,7 @@ function AddPage() {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
 export default AddPage;

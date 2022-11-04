@@ -31,6 +31,7 @@ function Login() {
                 .then((res) => {
                     const token = res.data.access_token;
                     setLoginStatus({ isLogin: true, LoginUser: res.data.owner.username, UserID:Number(res.data.owner.id), Token: token});
+                    localStorage.setItem('login', JSON.stringify(res.data))
                     console.log('로그인');
                     navigate(-1);
                 })

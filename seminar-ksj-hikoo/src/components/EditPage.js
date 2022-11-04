@@ -7,28 +7,27 @@ import { IDContext, MenuContext } from '../App';
 import { useEffect } from 'react';
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { typetotext, FindMenubyID } from './function';
+import { typetotext } from './function';
 import axios from 'axios';
+import Loading from './Loading';
 
 function EditPage() {
 
+    const [Load, setLoad] = useState(true);
     const navigate = useNavigate();
     const param = useParams();
+    const [ThisPageMenu, setThisPageMenu] = useState();
 
     const value = useContext(MenuContext)
-    const menuList = value.menuList
     const setMenu = value.setMenu
-    const setSelect = value.setSelect
 
     const value2 = useContext(IDContext)
-    const LoginStatus = value2.LoginStatus
-    const StoreId = value2.StoreId
+    const StoreStatus = value2.StoreStatus
+    const setStore = value2.setStore
 
-    const Index = FindMenubyID(menuList, param.id)
-    const ThisPageMenu = menuList[Index]
-
-    const [inputs, setInputs] = useState({ enteredNum: "", enteredURL: "", enteredDes: "" })
+    const [inputs, setInputs] = useState({ enteredNum: "", enteredName: "", enteredType: "", enteredURL: "", enteredDes: "" })
     const { enteredNum, enteredURL, enteredDes } = inputs
+
     const changeInputs = (e) => {
         const { name, value } = e.target
         if (name === 'enteredNum') {
@@ -54,50 +53,72 @@ function EditPage() {
         } else if (enteredNum.replaceAll(",", "") % 10 !== 0) {
             alert("가격의 최소단위는 10원입니다.")
         } else {
-            axios
-                .patch(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/${param.id}`, {
-                    "price": Number(price),
-                    "image": image,
-                    "description": des
-                }, {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${LoginStatus.Token}`
-                    },
-                    params: { id: param.id }
-                })
-                .then(() => {
-                    axios
-                        .get('https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/', { params: { owner: StoreId } })
-                        .then((res) => {
-                            setMenu(res.data.data)
-                            navigate(`/menus/${param.id}`);
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                        })
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
+            if (JSON.parse(localStorage.getItem('login')) != null) {
+                axios
+                    .patch(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/${param.id}`, {
+                        "price": Number(price),
+                        "image": image,
+                        "description": des
+                    }, {
+                        withCredentials: true,
+                        headers: {
+                            Authorization: `Bearer ${JSON.parse(localStorage.getItem('login')).access_token}`
+                        },
+                        params: { id: param.id }
+                    })
+                    .then(() => {
+                        axios
+                            .get('https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/', { params: { owner: StoreStatus.id } })
+                            .then((res) => {
+                                setMenu(res.data.data)
+                                navigate(`/menus/${param.id}`);
+                            })
+                            .catch((error) => {
+                                console.log(error)
+                            })
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            } else {
+                navigate(-1)
+            }
         }
     }
 
     useEffect(() => {
-        if (!LoginStatus.isLogin) {
-            alert('로그인 후 이용해주세요')
-            navigate(-1)
+        if (JSON.parse(localStorage.getItem('login')) == null) {
+            navigate('/login')
         } else {
-            if (Index === -1) {
-                alert('없는 메뉴 입니다.')
-                navigate(-1)
-            } else {
-                setInputs({ enteredNum: ThisPageMenu.price.toLocaleString(), enteredURL: ThisPageMenu.image, enteredDes: ThisPageMenu.description })
-            }
+
+            axios
+                .get(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/${param.id}`)
+                .then((res) => {
+                    const Menu = res.data
+                    if (JSON.parse(localStorage.getItem('login')).owner.id == res.data.owner.id) {
+                        setThisPageMenu(res.data)
+                        setStore({
+                            id: JSON.parse(localStorage.getItem('login')).owner.id,
+                            name: JSON.parse(localStorage.getItem('login')).owner.store_name,
+                            owner: JSON.parse(localStorage.getItem('login')).owner.username
+                        })
+                        setInputs({
+                            enteredNum: Menu.price.toLocaleString(),
+                            enteredURL: Menu.image,
+                            enteredDes: Menu.description
+                        })
+                        setLoad(false)
+                    } else {
+                        navigate('/')
+                    }
+                })
+                .catch((error) => {
+                    navigate(-1)
+                })
         }
     }, [])
 
-    return (Index !== -1 &&
+    return (Load ? <Loading /> :
         <div className='AddWrap'>
             <Head />
             <div className='buttonfix'>
