@@ -5,14 +5,13 @@ import { useContext } from 'react';
 import { IDContext } from '../App';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 
 function Login() {
 
     const navigate = useNavigate();
     const value = useContext(IDContext)
-    const LoginStatus = value.LoginStatus
     const setLoginStatus = value.setLoginStatus
     const [inputs, setInputs] = useState({ ID: "", PW: "" });
     const changeInputs = (e) => {

@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { typetotext } from './function';
 import axios from 'axios';
 import Loading from './Loading';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 function EditPage() {
 
@@ -98,7 +98,7 @@ function EditPage() {
                 .get(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/${param.id}`)
                 .then((res) => {
                     const Menu = res.data
-                    if (JSON.parse(localStorage.getItem('login')).owner.id == res.data.owner.id) {
+                    if (JSON.parse(localStorage.getItem('login')).owner.id === res.data.owner.id) {
                         setThisPageMenu(res.data)
                         setStore({
                             id: JSON.parse(localStorage.getItem('login')).owner.id,

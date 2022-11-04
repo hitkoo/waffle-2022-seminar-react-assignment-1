@@ -1,10 +1,10 @@
 import '../css/Menulist.css';
 import React from 'react'
-import { typetotext, FilterMenu, rateToStarBig } from './function';
+import { typetotext, rateToStarBig } from './function';
 
-function Menulist({menuList, selectMenu, setSelect, search}) {
+function Menulist({menuList, selectMenu, setSelect}) {
 
-      const filteredMenu = FilterMenu(menuList, search)
+      // const filteredMenu = FilterMenu(menuList, search)
 
       const ShowMenuList = (menu) =>{
         return (menu.map((list) => (
@@ -18,9 +18,9 @@ function Menulist({menuList, selectMenu, setSelect, search}) {
         )))}
       
     return (
-        (search === null || search === '') ?
-            ShowMenuList(menuList) :
-            ShowMenuList(filteredMenu)
+        // (search === null || search === '') ?
+            ShowMenuList(menuList) 
+            // ShowMenuList(filteredMenu)
     );
 }
 

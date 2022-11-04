@@ -1,7 +1,7 @@
 import logo from '../asset/waffle_logo.svg';
 import '../css/Head.css';
 import React from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import { useContext } from 'react';
 import { IDContext } from '../App';
 import axios from "axios";
@@ -14,7 +14,6 @@ function Head() {
   const StoreStatus = value.StoreStatus
   const LoginRefresh = JSON.parse(localStorage.getItem('login'))
   const navigate = useNavigate()
-  const params = useParams();
   const Logout = () => {
     axios
       .post("https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/auth/logout", null, {
@@ -37,7 +36,7 @@ function Head() {
 
       <div className="Title">
         <Link to="/" ><img className="Logo" src={logo} alt="Logo" /></Link>
-        {StoreStatus.id == "" ?
+        {StoreStatus.id === "" ?
           <Link to="/" className='headtitle'><h1>와플스튜디오 메뉴 관리</h1></Link>
           :
           <Link to="/" className='storeTitle'>

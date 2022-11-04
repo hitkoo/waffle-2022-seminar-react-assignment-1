@@ -26,7 +26,6 @@ function DetailPage() {
     const navigate = useNavigate();
 
     const value = useContext(MenuContext)
-    const menuList = value.menuList
     const setSelect = value.setSelect
     const [Load, setLoad] = useState(true);
     const [ThisPageMenu, setThisPageMenu] = useState();
@@ -66,7 +65,7 @@ function DetailPage() {
                     <p className='selecttype'>{typetotext(ThisPageMenu.type)}</p>
                     <p className='selectprice'>{ThisPageMenu.price.toLocaleString()}원</p>
                     <p className='selectdes'>{ThisPageMenu.description}</p>
-                    {JSON.parse(localStorage.getItem('login'))!=null && JSON.parse(localStorage.getItem('login')).owner.id == ThisPageMenu.owner.id && <div className='editdelete'>
+                    {JSON.parse(localStorage.getItem('login'))!=null && JSON.parse(localStorage.getItem('login')).owner.id === ThisPageMenu.owner.id && <div className='editdelete'>
                         <img className='editicon' src={editicon} onClick={()=>{navigate(`/menus/${params.id}/edit`)}} alt={logo} />
                         <img className='deleteicon' src={deleteicon} onClick={showDeletemodal} alt={logo} />
                     </div>}

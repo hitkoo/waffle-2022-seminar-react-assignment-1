@@ -1,16 +1,16 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import '../css/Reviews.css';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import Loading from './Loading';
-import { rateToStar, timeForToday, rateToStarBig } from './function';
+import { rateToStar, timeForToday} from './function';
 import editicon from '../asset/edit.svg';
 import deleteicon from '../asset/delete.svg';
 import logo from '../asset/waffle_logo.svg'
 import { Rating } from 'react-simple-star-rating'
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import Deletemodal from './Deletemodal';
+// import Deletemodal from './Deletemodal';
 import { useInView } from "react-intersection-observer"
 
 function Reviews({ ThisPageMenu }) {
@@ -22,8 +22,8 @@ function Reviews({ ThisPageMenu }) {
     const [reviews, setReviews] = useState([]);
     const [nextReview, setNextReview] = useState(null);
     const [ref, inView] = useInView({
-        threshold: 1,
-        delay: 300,
+        threshold: 0.7,
+        delay: 200,
     });
     const [selectReview, setSelectReview] = useState("");
     const navigate = useNavigate();
@@ -44,8 +44,6 @@ function Reviews({ ThisPageMenu }) {
                 setReviews(res.data.data)
                 setLoad(false)
                 setNextReview(res.data.next)
-                console.log(res.data.next)
-                console.log('서버에서 리뷰 가져오기')
             })
             .catch((error) => {
                 toast.warn('리뷰 목록을 가져오지 못했습니다');
@@ -58,8 +56,6 @@ function Reviews({ ThisPageMenu }) {
             .then((res) => {
                 setReviews([...reviews, ...res.data.data])
                 setNextReview(res.data.next)
-                console.log(res.data.next)
-                console.log('서버에서 리뷰 더 가져오기')
             })
             .catch((error) => {
                 toast.warn('리뷰 목록을 가져오지 못했습니다');
@@ -79,7 +75,7 @@ function Reviews({ ThisPageMenu }) {
     const PostReview = () => {
         const content = input
         const menu = ThisPageMenu.id
-        if (input == "" || rating == null) {
+        if (input === "" || rating == null) {
             toast.warn('별점과 리뷰를 입력해주세요');
         } else {
             if (JSON.parse(localStorage.getItem('login')) != null) {
@@ -167,8 +163,7 @@ function Reviews({ ThisPageMenu }) {
     const ShowReviews = (list) => {
         return (
             list.map((e, idx) => (
-                ((selectReview == "") || (selectReview.id != e.id)) ?
-                    // <div>
+                ((selectReview === "") || (selectReview.id !== e.id)) ?
                     <div key={e.id}>
                         <div className='reviewContent'>
                             <div className='reviewTop'>
@@ -176,11 +171,11 @@ function Reviews({ ThisPageMenu }) {
                                     <span className='reviewAuthor'>{e.author.username}</span>
                                     <span className='reviewRate'>{rateToStar(e.rating)}</span>
                                     <span className='reviewTime'>{timeForToday(e.created_at)}
-                                        <span className='isEdit'>{(e.created_at == e.updated_at) ? "" : " 수정됨"}</span>
+                                        <span className='isEdit'>{(e.created_at === e.updated_at) ? "" : " 수정됨"}</span>
                                     </span>
                                 </div>
                                 {JSON.parse(localStorage.getItem('login')) != null &&
-                                    e.author.id == JSON.parse(localStorage.getItem('login')).owner.id &&
+                                    e.author.id === JSON.parse(localStorage.getItem('login')).owner.id &&
                                     <div className='reviewTopRight'>
                                         <img className='reviewEdit' src={editicon} alt={logo} onClick={() => { setSelectReview(e); setEditEnter({ input: e.content, rating: e.rating / 2 }); }} />
                                         <img className='reviewDelete' src={deleteicon} alt={logo} onClick={() => DeleteReview(e.id)} />
@@ -189,7 +184,7 @@ function Reviews({ ThisPageMenu }) {
                             </div>
                             <div className='reviewBottom'>{e.content}</div>
                         </div>
-                        {list.length - 1 == idx && list.length >= 10 &&
+                        {list.length - 1 === idx && list.length >= 10 &&
                             <div className='scrollTarget' ref={ref}></div>}
                     </div> :
                     <div key={e.id} className='reviewEditBox'>
@@ -209,7 +204,6 @@ function Reviews({ ThisPageMenu }) {
 
             )))
     }
-
     return (
         Load ? <Loading /> :
             <div>
@@ -221,13 +215,13 @@ function Reviews({ ThisPageMenu }) {
                     </div>
                     <div className='reviewBox'>
                         <div className='reviewList'>
-                            {reviews.length == 0 ?
+                            {reviews.length === 0 ?
                                 <div>
                                     <p>등록된 리뷰가 없습니다. 첫 리뷰를 등록해주세요!</p>
                                 </div> :
                                 ShowReviews(reviews)}
                         </div>
-                        {JSON.parse(localStorage.getItem('login')) != null && selectReview == "" &&
+                        {JSON.parse(localStorage.getItem('login')) != null && selectReview === "" &&
                             <div className='reviewPost'>
                                 <div>
                                     <Rating

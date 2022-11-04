@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import { MenuContext } from '../App';
 import '../css/MenuBox2.css';
 import logo from '../asset/waffle_logo.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {typetotext} from './function';
 
 function MenuBox2() {

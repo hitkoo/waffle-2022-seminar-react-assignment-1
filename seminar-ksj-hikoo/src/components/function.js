@@ -1,4 +1,3 @@
-import { FaStar } from "react-icons/fa";
 import React from "react";
 import '../css/function.css';
 import { Rating } from 'react-simple-star-rating'

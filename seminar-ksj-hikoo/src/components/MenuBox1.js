@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { MenuContext, IDContext } from '../App';
+import { MenuContext } from '../App';
 import '../css/MenuBox1.css';
 import Menulist from './Menulist.js';
 import add from '../asset/add.svg';
@@ -14,9 +14,6 @@ function MenuBox1() {
   const selectMenu = value.selectMenu
   const setSelect = value.setSelect
   const param = useParams();
-
-  const value2 = useContext(IDContext)
-  const LoginStatus = value2.LoginStatus
 
   const navigate = useNavigate()
 
@@ -37,7 +34,7 @@ function MenuBox1() {
           <div className='Rate'><b>평점</b></div>
         </div>
         <Menulist menuList={menuList} selectMenu={selectMenu} setSelect={setSelect} search={search}></Menulist>
-        {JSON.parse(localStorage.getItem('login'))!=null && JSON.parse(localStorage.getItem('login')).owner.id == param.owner && <img id='AddButton'src={add} alt={logo} onClick={() => OpenAddPage()}></img>}
+        {JSON.parse(localStorage.getItem('login'))!=null && JSON.parse(localStorage.getItem('login')).owner.id === param.owner && <img id='AddButton'src={add} alt={logo} onClick={() => OpenAddPage()}></img>}
 
       </div>
     </div>

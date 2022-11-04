@@ -4,10 +4,10 @@ import Login from './components/Login';
 import AddPage from './components/AddPage';
 import EditPage from './components/EditPage';
 import React, { useState, createContext, useEffect } from 'react';
-import { BrowserRouter, Route, Routes, Navigate, json } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import DetailPage from './components/DetailPage';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 export const IDContext = createContext();
 export const MenuContext = createContext();
@@ -32,7 +32,7 @@ function App() {
           setLoginStatus({ IsLogin: true, LoginUser: LoginRefresh.owner.username, UserID: LoginRefresh.owner.id, Token: token })
         })
         .catch((error) => {
-          if (error.toJSON().status == 500) {
+          if (error.toJSON().status === 500) {
             window.location.reload()
           } else {
             localStorage.removeItem("login")
