@@ -10,7 +10,6 @@ import logo from '../asset/waffle_logo.svg'
 import { Rating } from 'react-simple-star-rating'
 import {  toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-// import Deletemodal from './Deletemodal';
 import { useInView } from "react-intersection-observer"
 
 function Reviews({ ThisPageMenu }) {
