@@ -14,8 +14,8 @@ export const MenuContext = createContext();
 
 function App() {
 
-  const [LoginStatus, setLoginStatus] = useState({ IsLogin: false, LoginUser: "", UserID: "", Token: "" });
-  const [StoreStatus, setStore] = useState({ id: "", name: "", owner: "" });
+  const [loginStatus, setLoginStatus] = useState({ IsLogin: false, LoginUser: "", UserID: "", Token: "" });
+  const [storeStatus, setStore] = useState({ id: "", name: "", owner: "" });
   const [menuList, setMenu] = useState();
   const [selectMenu, setSelect] = useState("");
   const [search, setSearch] = useState("");
@@ -29,21 +29,17 @@ function App() {
         })
         .then((res) => {
           const token = res.data.access_token;
-          setLoginStatus({ IsLogin: true, LoginUser: LoginRefresh.owner.username, UserID: LoginRefresh.owner.id, Token: token })
+          setLoginStatus({ IsLogin: true, LoginUser: LoginRefresh.username, UserID: LoginRefresh.id, Token: token })
         })
         .catch((error) => {
-          if (error.toJSON().status === 500) {
-            window.location.reload()
-          } else {
-            localStorage.removeItem("login")
-            setLoginStatus({ IsLogin: false, LoginUser: "", UserID: "", Token: "" })
-          }
+          localStorage.removeItem("login")
+          setLoginStatus({ IsLogin: false, LoginUser: "", UserID: "", Token: "" })
         });
     }
   }, [])
 
   return (
-    <IDContext.Provider value={{ LoginStatus, setLoginStatus, StoreStatus, setStore }}>
+    <IDContext.Provider value={{ LoginStatus: loginStatus, setLoginStatus, StoreStatus: storeStatus, setStore }}>
       <MenuContext.Provider value={{ menuList, setMenu, selectMenu, setSelect, search, setSearch }}>
         <ToastContainer
           position="top-center"

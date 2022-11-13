@@ -8,12 +8,9 @@ import {useNavigate,useParams} from 'react-router-dom';
 
 function MenuBox1() {
   
-  const value = useContext(MenuContext);
-  const search = value.search
-  const menuList = value.menuList
-  const selectMenu = value.selectMenu
-  const setSelect = value.setSelect
+  const { menuList, selectMenu, setSelect, search } = useContext(MenuContext);
   const param = useParams();
+  const LoginRefresh = JSON.parse(localStorage.getItem('login'))
 
   const navigate = useNavigate()
 
@@ -34,7 +31,7 @@ function MenuBox1() {
           <div className='Rate'><b>평점</b></div>
         </div>
         <Menulist menuList={menuList} selectMenu={selectMenu} setSelect={setSelect} search={search}></Menulist>
-        {JSON.parse(localStorage.getItem('login'))!=null && JSON.parse(localStorage.getItem('login')).owner.id === param.owner && <img id='AddButton'src={add} alt={logo} onClick={() => OpenAddPage()}></img>}
+        {LoginRefresh!=null && LoginRefresh.id === Number(param.owner) && <img id='AddButton'src={add} alt={logo} onClick={() => OpenAddPage()}></img>}
 
       </div>
     </div>

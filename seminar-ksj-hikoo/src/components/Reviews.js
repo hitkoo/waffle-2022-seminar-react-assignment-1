@@ -12,7 +12,7 @@ import {  toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useInView } from "react-intersection-observer"
 
-function Reviews({ ThisPageMenu }) {
+function Reviews({ ThisPageMenu, LoginStatus, LoginRefresh }) {
 
     const [Load, setLoad] = useState(true);
     const [input, setInputs] = useState("");
@@ -77,14 +77,14 @@ function Reviews({ ThisPageMenu }) {
         if (input === "" || rating == null) {
             toast.warn('별점과 리뷰를 입력해주세요');
         } else {
-            if (JSON.parse(localStorage.getItem('login')) != null) {
+            if (LoginRefresh != null) {
                 axios
                     .post(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/reviews/`, {
                         content: content, rating: (rating * 2).toFixed(), menu: menu
                     }, {
                         withCredentials: true,
                         headers: {
-                            Authorization: `Bearer ${JSON.parse(localStorage.getItem('login')).access_token}`
+                            Authorization: `Bearer ${LoginStatus.Token}`
                         }
                     })
                     .then(() => {
@@ -105,14 +105,14 @@ function Reviews({ ThisPageMenu }) {
     const EditReview = () => {
         const content = EditEnter.input
         const rate = Number(EditEnter.rating)
-        if (JSON.parse(localStorage.getItem('login')) != null) {
+        if (LoginRefresh != null) {
             axios
                 .patch(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/reviews/${selectReview.id}`, {
                     content: content, rating: (rate * 2).toFixed()
                 }, {
                     withCredentials: true,
                     headers: {
-                        Authorization: `Bearer ${JSON.parse(localStorage.getItem('login')).access_token}`
+                        Authorization: `Bearer ${LoginStatus.Token}`
                     },
                     params: { id: selectReview.id }
                 })
@@ -131,12 +131,12 @@ function Reviews({ ThisPageMenu }) {
     }
 
     const DeleteReview = (id) => {
-        if (JSON.parse(localStorage.getItem('login')) != null) {
+        if (LoginRefresh != null) {
             axios
                 .delete(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/reviews/${id}`, {
                     withCredentials: true,
                     headers: {
-                        Authorization: `Bearer ${JSON.parse(localStorage.getItem('login')).access_token}`
+                        Authorization: `Bearer ${LoginStatus.Token}`
                     },
                     params: { id: id }
                 })
@@ -173,8 +173,8 @@ function Reviews({ ThisPageMenu }) {
                                         <span className='isEdit'>{(e.created_at === e.updated_at) ? "" : " 수정됨"}</span>
                                     </span>
                                 </div>
-                                {JSON.parse(localStorage.getItem('login')) != null &&
-                                    e.author.id === JSON.parse(localStorage.getItem('login')).owner.id &&
+                                {LoginRefresh != null &&
+                                    e.author.id === LoginRefresh.id &&
                                     <div className='reviewTopRight'>
                                         <img className='reviewEdit' src={editicon} alt={logo} onClick={() => { setSelectReview(e); setEditEnter({ input: e.content, rating: e.rating / 2 }); }} />
                                         <img className='reviewDelete' src={deleteicon} alt={logo} onClick={() => DeleteReview(e.id)} />
@@ -209,8 +209,8 @@ function Reviews({ ThisPageMenu }) {
                 <div className='reviewContainer'>
                     <div className='rateAverage'>
                         <span>평균 별점</span>
-                        {rateToStar(9)}
-                        <span className='Average'>4.5</span>
+                        {rateToStar(ThisPageMenu.rating)}
+                        <span className='Average'>{ThisPageMenu.rating/2}</span>
                     </div>
                     <div className='reviewBox'>
                         <div className='reviewList'>
@@ -220,7 +220,7 @@ function Reviews({ ThisPageMenu }) {
                                 </div> :
                                 ShowReviews(reviews)}
                         </div>
-                        {JSON.parse(localStorage.getItem('login')) != null && selectReview === "" &&
+                        {LoginRefresh != null && selectReview === "" &&
                             <div className='reviewPost'>
                                 <div>
                                     <Rating

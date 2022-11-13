@@ -22,9 +22,8 @@ function EditPage() {
     const value = useContext(MenuContext)
     const setMenu = value.setMenu
 
-    const value2 = useContext(IDContext)
-    const StoreStatus = value2.StoreStatus
-    const setStore = value2.setStore
+    const {LoginStatus, StoreStatus, setStore} = useContext(IDContext)
+    const LoginRefresh = JSON.parse(localStorage.getItem('login'))
 
     const [inputs, setInputs] = useState({ enteredNum: "", enteredName: "", enteredType: "", enteredURL: "", enteredDes: "" })
     const { enteredNum, enteredURL, enteredDes } = inputs
@@ -54,7 +53,7 @@ function EditPage() {
         } else if (enteredNum.replaceAll(",", "") % 10 !== 0) {
             toast.warn("가격의 최소단위는 10원입니다");
         } else {
-            if (JSON.parse(localStorage.getItem('login')) != null) {
+            if (LoginRefresh != null) {
                 axios
                     .patch(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/${param.id}`, {
                         "price": Number(price),
@@ -63,7 +62,7 @@ function EditPage() {
                     }, {
                         withCredentials: true,
                         headers: {
-                            Authorization: `Bearer ${JSON.parse(localStorage.getItem('login')).access_token}`
+                            Authorization: `Bearer ${LoginStatus.Token}`
                         },
                         params: { id: param.id }
                     })
@@ -90,7 +89,7 @@ function EditPage() {
     }
 
     useEffect(() => {
-        if (JSON.parse(localStorage.getItem('login')) == null) {
+        if (LoginRefresh == null) {
             toast.warn('로그인 후 이용해주세요');
             navigate('/login')
         } else {
@@ -98,12 +97,12 @@ function EditPage() {
                 .get(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/${param.id}`)
                 .then((res) => {
                     const Menu = res.data
-                    if (JSON.parse(localStorage.getItem('login')).owner.id === res.data.owner.id) {
+                    if (LoginRefresh.id === res.data.owner.id) {
                         setThisPageMenu(res.data)
                         setStore({
-                            id: JSON.parse(localStorage.getItem('login')).owner.id,
-                            name: JSON.parse(localStorage.getItem('login')).owner.store_name,
-                            owner: JSON.parse(localStorage.getItem('login')).owner.username
+                            id: LoginRefresh.id,
+                            name: LoginRefresh.store_name,
+                            owner: LoginRefresh.username
                         })
                         setInputs({
                             enteredNum: Menu.price.toLocaleString(),

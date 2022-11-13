@@ -51,7 +51,7 @@ function Head() {
           <button className='LoginButton' onClick={() => navigate('/login')}>로그인</button>
         </div> :
         <div className='LoginTap'>
-          <p className='LoginStatus'><span className='LoginIdBold'>{LoginRefresh.owner.username}</span>님 환영합니다!</p>
+          <p className='LoginStatus'><span className='LoginIdBold'>{LoginRefresh.username}</span>님 환영합니다!</p>
           <div className='LoginButtonArea'>
             <button className='LoginButton' onClick={() => { navigate(`/store/${LoginStatus.UserID}`) }}>내 가게</button>
             <button className='LoginButton' onClick={() => { Logout() }}>로그아웃</button>

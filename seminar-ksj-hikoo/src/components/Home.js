@@ -8,6 +8,7 @@ import { useNavigate, } from 'react-router-dom';
 import axios from 'axios';
 import Loading from './Loading';
 import { rateToStarBig } from './function';
+import { toast } from 'react-toastify';
 
 function Home() {
 
@@ -30,7 +31,7 @@ function Home() {
         setStore({id : "", name : "", ownername : ""})
       })
       .catch((error) => {
-
+        toast.error("가게 목록을 불러오지 못했습니다.")
       }) 
       : axios
       .get("https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/owners/", { params: { name : search } })
@@ -40,7 +41,7 @@ function Home() {
         setStore({id : "", name : "", ownername : ""})
       })
       .catch((error) => {
-
+        toast.error("가게 목록을 불러오지 못했습니다.")
       })
   }, [search])
 

@@ -4,7 +4,6 @@ import { typetotext, rateToStarBig } from './function';
 
 function Menulist({menuList, selectMenu, setSelect}) {
 
-      // const filteredMenu = FilterMenu(menuList, search)
 
       const ShowMenuList = (menu) =>{
         return (menu.map((list) => (
@@ -13,14 +12,12 @@ function Menulist({menuList, selectMenu, setSelect}) {
               <span className='MenuName'>{list.name}</span>
               <span className='MenuType'>{typetotext(list.type)}</span>
               <span className='MenuPrice'>{list.price.toLocaleString()}</span>
-              <span className='MenuRate'>{rateToStarBig(8)}</span>
+              <span className='MenuRate'>{rateToStarBig(list.rating)}</span>
           </div>
         )))}
       
     return (
-        // (search === null || search === '') ?
             ShowMenuList(menuList) 
-            // ShowMenuList(filteredMenu)
     );
 }
 

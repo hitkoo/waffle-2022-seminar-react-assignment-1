@@ -21,12 +21,6 @@ export const FindMenubyName = (menulist, name) => {
   const Index = menulist.findIndex(e => e.name === name)
   return Index
 }
-
-export const FilterMenu = (menulist, search) => {
-  const filteredMenu = menulist.filter((el) => el.name.toString().toLowerCase().indexOf(search.toString().toLowerCase()) > -1)
-  return filteredMenu
-}
-
 export const timeForToday = (value) => {
   const today = new Date();
   const timeValue = new Date(value);

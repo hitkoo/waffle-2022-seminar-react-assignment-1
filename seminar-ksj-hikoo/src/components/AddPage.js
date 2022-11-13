@@ -16,9 +16,8 @@ function AddPage() {
     const menuList = value.menuList
     const setMenu = value.setMenu
     const setSelect = value.setSelect
-    const value2 = useContext(IDContext)
-    const StoreStatus = value2.StoreStatus
-    const setStore = value2.setStore
+    const {LoginStatus, StoreStatus, setStore} = useContext(IDContext)
+    const LoginRefresh = JSON.parse(localStorage.getItem('login'))
 
     const [inputs, setInputs] = useState({ enteredNum: "", enteredName: "", enteredType: "", enteredURL: "", enteredDes: "" })
     const { enteredNum, enteredName, enteredType, enteredURL, enteredDes } = inputs
@@ -53,7 +52,7 @@ function AddPage() {
             toast.warn('가격의 최소 단위는 10원입니다.');
         }
         else {
-            if (JSON.parse(localStorage.getItem('login')) != null) {
+            if (LoginRefresh != null) {
                 axios
                     .post('https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/', {
                         "name": name,
@@ -64,7 +63,7 @@ function AddPage() {
                     }, {
                         withCredentials: true,
                         headers: {
-                            Authorization: `Bearer ${JSON.parse(localStorage.getItem('login')).access_token}`
+                            Authorization: `Bearer ${LoginStatus.Token}`
                         }
                     })
                     .then(() => {
@@ -92,14 +91,14 @@ function AddPage() {
     }
 
     useEffect(() => {
-        if (JSON.parse(localStorage.getItem('login')) == null) {
+        if (LoginRefresh == null) {
             toast.warn('로그인 후 이용해주세요');
             navigate('/login')
         } else {
             setStore({
-                id: JSON.parse(localStorage.getItem('login')).owner.id,
-                name: JSON.parse(localStorage.getItem('login')).owner.store_name,
-                owner: JSON.parse(localStorage.getItem('login')).owner.username
+                id: LoginRefresh.id,
+                name: LoginRefresh.store_name,
+                owner: LoginRefresh.username
             })
         }
     }, [])

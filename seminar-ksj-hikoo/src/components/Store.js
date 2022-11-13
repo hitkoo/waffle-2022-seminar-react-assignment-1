@@ -58,10 +58,8 @@ function Store() {
       <Loading /> :
       <div className="Wrap">
         <Head />
-        <Search>
-        </Search>
-        <MenuBox>
-        </MenuBox>
+        <Search />
+        <MenuBox />
       </div>
   );
 }

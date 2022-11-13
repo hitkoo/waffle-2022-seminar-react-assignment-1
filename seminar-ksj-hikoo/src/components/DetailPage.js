@@ -29,9 +29,9 @@ function DetailPage() {
     const setSelect = value.setSelect
     const [Load, setLoad] = useState(true);
     const [ThisPageMenu, setThisPageMenu] = useState();
-    const value2 = useContext(IDContext)
-    const setStore = value2.setStore
-    const StoreStatus = value2.StoreStatus
+    const {LoginStatus, StoreStatus, setStore} = useContext(IDContext)
+    const LoginRefresh = JSON.parse(localStorage.getItem('login'))
+
 
     const params = useParams();
     const handleError = (e) => {
@@ -65,17 +65,17 @@ function DetailPage() {
                     <p className='selecttype'>{typetotext(ThisPageMenu.type)}</p>
                     <p className='selectprice'>{ThisPageMenu.price.toLocaleString()}원</p>
                     <p className='selectdes'>{ThisPageMenu.description}</p>
-                    {JSON.parse(localStorage.getItem('login'))!=null && JSON.parse(localStorage.getItem('login')).owner.id === ThisPageMenu.owner.id && <div className='editdelete'>
+                    {LoginRefresh!=null && LoginRefresh.id === ThisPageMenu.owner.id && <div className='editdelete'>
                         <img className='editicon' src={editicon} onClick={()=>{navigate(`/menus/${params.id}/edit`)}} alt={logo} />
                         <img className='deleteicon' src={deleteicon} onClick={showDeletemodal} alt={logo} />
                     </div>}
                 </div>
                 <div className='DetailRight'>
-                    <Reviews ThisPageMenu={ThisPageMenu}></Reviews>
+                    <Reviews ThisPageMenu={ThisPageMenu} LoginStatus={LoginStatus} LoginRefresh={LoginRefresh}></Reviews>
                 </div>
             </div>
             {DeletemodalOpen && <Deletemodal
-                DeletemodalOpen={DeletemodalOpen} setDeletemodalOpen={setDeletemodalOpen} ThisPageMenu={ThisPageMenu} params={params} StoreStatus={StoreStatus} MenuOrReview="Menu">
+                DeletemodalOpen={DeletemodalOpen} setDeletemodalOpen={setDeletemodalOpen} ThisPageMenu={ThisPageMenu} params={params} StoreStatus={StoreStatus} MenuOrReview="Menu" LoginStatus={LoginStatus}>
             </Deletemodal>}
         </div>
     )

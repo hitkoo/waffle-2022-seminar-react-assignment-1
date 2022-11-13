@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-function Deletemodal({ DeletemodalOpen, setDeletemodalOpen, params, StoreStatus, MenuOrReview }) {
+function Deletemodal({ DeletemodalOpen, setDeletemodalOpen, params, StoreStatus, MenuOrReview, LoginStatus }) {
 
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ function Deletemodal({ DeletemodalOpen, setDeletemodalOpen, params, StoreStatus,
       .delete(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/${params.id}`, {
         withCredentials: true,
         headers: {
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem('login')).access_token}`
+          Authorization: `Bearer ${LoginStatus.Token}`
         },
         params: { id: params.id }
       })
@@ -44,9 +44,6 @@ function Deletemodal({ DeletemodalOpen, setDeletemodalOpen, params, StoreStatus,
           .catch((error) => {
             toast.error('메뉴 삭제 실패했습니다');
           })
-      })
-      .catch((error) => {
-        toast.error('메뉴 삭제 실패했습니다');
       })
   }
 
