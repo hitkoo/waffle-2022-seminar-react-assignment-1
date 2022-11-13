@@ -1,0 +1,214 @@
+.reviewContainer {
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    height: 75vh;
+}
+
+.rateAverage {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.reviewBox {
+    flex: 12;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.reviewList {
+    flex: 4;
+    overflow: auto;
+}
+
+.Average {
+    margin-left: 3px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.reviewContent {
+    border: 1px solid;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 5px 15px;
+}
+.reviewNext{
+    margin-top: 200px;
+    width: 100%;
+    height: 20px;
+    border: 1px solid;
+}
+.reviewTop {
+    flex: 1;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.reviewTopLeft {
+    flex: 10;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+.reviewTopRight {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+}
+
+.reviewEdit {
+    padding-top: 2px;
+    height: 85%;
+}
+
+.reviewEdit:hover {
+    cursor: pointer;
+}
+
+.reviewDelete {
+    padding-top: 2px;
+    height: 85%;
+    margin-left: 3px;
+}
+
+.reviewDelete:hover {
+    cursor: pointer;
+}
+
+.reviewBottom {
+    margin-top: 5px;
+    display: flex;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+
+.reviewAuthor {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.reviewRate {
+    margin-left: 3px;
+}
+
+.reviewinputrate {
+    margin-left: 3px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #8A8A8A
+}
+
+
+.reviewTime {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    color: #8A8A8A;
+}
+
+.isEdit{
+    margin-left: 5px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 20px;
+    color: #8A8A8A;
+}
+
+.reviewPost {
+    flex: 1;
+    background-color: white;
+    border-radius: 10px;
+    width: calc(100% - 10px);
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewPostButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+#reviewinput {
+    height: 60px;
+    border: solid 1px;
+    border-radius: 10px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    padding: 5px 10px;
+}
+
+.reviewadd {
+    width: 40px;
+    height: 25px;
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    border: solid 0.2px #999999;
+    background-color: #D3FFC3;
+    margin-top: 5px;
+}
+
+.reviewEditBox {
+    background-color: white;
+    border-radius: 10px;
+    width: calc(100% - 10px);
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.reviewEditCancle {
+    width: 40px;
+    height: 25px;
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    border: solid 0.2px #999999;
+    background-color: ffffff;
+    margin-top: 5px;
+    margin-left: 3px;
+}
+
+.scrollTarget{
+    /* border: 1px solid; */
+    height: 20px;
+}

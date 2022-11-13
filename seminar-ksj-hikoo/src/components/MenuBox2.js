@@ -2,11 +2,12 @@ import React, {useContext} from 'react';
 import { MenuContext } from '../App';
 import '../css/MenuBox2.css';
 import logo from '../asset/waffle_logo.svg';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {typetotext} from './function';
 
 function MenuBox2() {
 
+    const navigate = useNavigate()
     const value = useContext(MenuContext)
     const selectMenu = value.selectMenu
     const setSelect = value.setSelect
@@ -25,7 +26,7 @@ function MenuBox2() {
                 <p className='selecttype'>{typetotext(selectMenu.type)}</p>
                 <p className='selectprice'>{selectMenu.price.toLocaleString()}원</p>
                 <div className='detailview'>
-                    <Link to={`/menus/${selectMenu.id}`}><button className='ToDetail'>자세히</button></Link>
+                    <button className='ToDetail' onClick={() => { navigate(`/menus/${selectMenu.id}`) }}>자세히</button>
                 </div>
             </div>
         )

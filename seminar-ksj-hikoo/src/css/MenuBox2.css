@@ -32,6 +32,7 @@
   }
 
   .selectimage {
+    margin: 10px 0px;
     width: 180px;
     height: 180px;
     border: solid 0.5px #999999;

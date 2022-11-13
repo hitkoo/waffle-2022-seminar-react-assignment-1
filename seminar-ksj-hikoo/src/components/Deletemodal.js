@@ -1,18 +1,12 @@
 import '../css/Deletemodal.css';
 import React from "react";
-import { useRef, useEffect, useContext } from 'react';
-import { MenuContext } from '../App';
+import { useRef, useEffect } from 'react';
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
-function Deletemodal({ DeletemodalOpen, setDeletemodalOpen }) {
-
-  const value = useContext(MenuContext)
-
-  const menuList = value.menuList
-  const selectMenu = value.selectMenu
-  const setMenu = value.setMenu
-  const setSelect = value.setSelect
+function Deletemodal({ DeletemodalOpen, setDeletemodalOpen, params, StoreStatus, MenuOrReview, LoginStatus }) {
 
   const navigate = useNavigate();
 
@@ -27,14 +21,30 @@ function Deletemodal({ DeletemodalOpen, setDeletemodalOpen }) {
   }
 
   const DeleteMenu = () => {
-    const findIndex = menuList.findIndex(e => e.id === selectMenu.id)
-    menuList.splice(findIndex, 1)
-    const newMenuList = menuList
-    setMenu(newMenuList)
-    setSelect("")
-    navigate("/store/1")
-    setAnimate(false)
-    setDeletemodalOpen(false);
+    axios
+      .delete(`https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/${params.id}`, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${LoginStatus.Token}`
+        },
+        params: { id: params.id }
+      })
+      .then(() => {
+        axios
+          .get('https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/', { params: { owner: StoreStatus.id } })
+          .then((res) => {
+            toast.success('메뉴 삭제 성공했습니다');
+            setAnimate(true);
+            setTimeout(() => {
+              setAnimate(false);
+              setDeletemodalOpen(false);
+              navigate(`/store/${StoreStatus.id}`);
+            }, 300);
+          })
+          .catch((error) => {
+            toast.error('메뉴 삭제 실패했습니다');
+          })
+      })
   }
 
   const DeletemodalRef = useRef();
@@ -56,8 +66,8 @@ function Deletemodal({ DeletemodalOpen, setDeletemodalOpen }) {
 
   if (!animate && !DeletemodalOpen) return null;
   return (
-    <div className={`deletebackground${animate?"Close":""}`} >
-      <div ref={DeletemodalRef} className={`deleteContainer${animate?"Close":""}`}>
+    <div className={`deletebackground${animate ? "Close" : ""}`} >
+      <div ref={DeletemodalRef} className={`deleteContainer${animate ? "Close" : ""}`}>
         <b className='deletetitle'>메뉴 삭제</b>
         <p className='deleteline'>정말로 삭제하시겠습니까?</p>
         <div className='deletebuttonArea'>

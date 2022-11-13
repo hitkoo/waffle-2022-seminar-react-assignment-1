@@ -3,20 +3,21 @@ import React from "react";
 import { useState, useContext, useEffect } from 'react';
 import { IDContext, MenuContext } from '../App';
 import { useNavigate } from 'react-router-dom';
+import { FindMenubyName } from './function';
 import Head from './Head';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddPage() {
 
     const navigate = useNavigate()
     const value = useContext(MenuContext)
-    const maxId = value.maxId
-    const setMaxId = value.setMaxId
     const menuList = value.menuList
     const setMenu = value.setMenu
     const setSelect = value.setSelect
-
-    const value2 = useContext(IDContext)
-    const LoginStatus = value2.LoginStatus
+    const {LoginStatus, StoreStatus, setStore} = useContext(IDContext)
+    const LoginRefresh = JSON.parse(localStorage.getItem('login'))
 
     const [inputs, setInputs] = useState({ enteredNum: "", enteredName: "", enteredType: "", enteredURL: "", enteredDes: "" })
     const { enteredNum, enteredName, enteredType, enteredURL, enteredDes } = inputs
@@ -27,17 +28,15 @@ function AddPage() {
             const numvalue = value.replaceAll(",", "");
             if (!isNaN(numvalue)) {
                 const removedCommaValue = Number(numvalue);
-                setInputs({ ...inputs, [name]: removedCommaValue.toLocaleString()})
+                setInputs({ ...inputs, [name]: removedCommaValue.toLocaleString() })
             } else {
-                alert("가격에는 숫자만 입력해야합니다.")
+                toast.warn("가격에는 숫자만 입력해야합니다");
                 setInputs({ ...inputs, [name]: "" })
             };
         } else {
             setInputs({ ...inputs, [name]: value })
         }
     }
-
-
 
     // 추가버튼 클릭시 실행되는 함수
     const addMenu = () => {
@@ -46,36 +45,66 @@ function AddPage() {
         const price = enteredNum.replaceAll(",", "")
         const image = enteredURL
         const des = enteredDes
-        const checkName = menuList.findIndex(e => e.name === enteredName)
-        //메뉴 이름 중복을 확인하는 logic
         if (name === '' || price === '' || type === '') {
-            alert("이름, 종류, 가격은 필수 입력 사항입니다.")
-        }
-        else if (checkName !== -1) {
-            alert("중복된 이름은 입력할 수 없습니다.")
-            setInputs({...inputs, 'enteredName' : ""});
+            toast.warn("이름, 종류, 가격은 필수 입력 사항입니다.");
         }
         else if (enteredNum.replaceAll(",", "") % 10 !== 0) {
-            alert("가격의 최소단위는 10원입니다.")
+            toast.warn('가격의 최소 단위는 10원입니다.');
         }
         else {
-            const newMenuList = [...menuList, { id: maxId, name: name, price: Number(price), image: image, type: type, description: des }]
-            setMenu(newMenuList);
-            setSelect({ id: maxId, name: name, price: Number(price), image: image })
-            setMaxId(maxId + 1);
-            navigate(-1);
+            if (LoginRefresh != null) {
+                axios
+                    .post('https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/', {
+                        "name": name,
+                        "type": type,
+                        "price": Number(price),
+                        "image": image,
+                        "description": des
+                    }, {
+                        withCredentials: true,
+                        headers: {
+                            Authorization: `Bearer ${LoginStatus.Token}`
+                        }
+                    })
+                    .then(() => {
+                        axios
+                            .get('https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/menus/', { params: { owner: StoreStatus.id } })
+                            .then((res) => {
+                                setMenu(res.data.data)
+                                setSelect(menuList[FindMenubyName(menuList, name)])
+                                toast.success('메뉴 추가에 성공했습니다');
+                                navigate(`/store/${StoreStatus.id}`);
+                            })
+                            .catch((error) => {
+                                toast.success('메뉴 목록 불러오기에 실패했습니다');
+                                navigate(`/store/${StoreStatus.id}`);
+                            })
+                    })
+                    .catch((error) => {
+                        toast.error('메뉴 추가에 실패했습니다');
+                    })
+            } else {
+                toast.warn('로그인 후 이용해주세요');
+                navigate('/login')
+            }
         }
     }
 
     useEffect(() => {
-        if (!LoginStatus.isLogin){
-            alert('로그인 후 이용해주세요')
-            navigate(-1)
+        if (LoginRefresh == null) {
+            toast.warn('로그인 후 이용해주세요');
+            navigate('/login')
+        } else {
+            setStore({
+                id: LoginRefresh.id,
+                name: LoginRefresh.store_name,
+                owner: LoginRefresh.username
+            })
         }
-    },[])
+    }, [])
 
 
-    return ( LoginStatus.isLogin &&
+    return (
         <div className='AddWrap'>
             <Head />
             <div className='buttonfix'>
@@ -84,7 +113,7 @@ function AddPage() {
                     <p className='line'>이름</p>
                     <input id='name' name='enteredName' type='text' className='input' placeholder="맛있는와플(필수)" value={enteredName} onChange={changeInputs}></input>
                     <p className='line'>종류</p>
-                    <select id={`type${enteredType === '' ? "no" : ""}`} name='enteredType' type='text' defaultvalue={enteredType} onChange={changeInputs}>
+                    <select id={`type${enteredType === '' ? "no" : ""}`} name='enteredType' type='text' value={enteredType} onChange={changeInputs}>
                         <option key="" value="" disabled selected hidden>상품의 종류를 선택하세요(필수)</option>
                         <option key='waffle' value='waffle'>와플</option>
                         <option key='beverage' value='beverage'>음료</option>
@@ -107,7 +136,7 @@ function AddPage() {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
 export default AddPage;

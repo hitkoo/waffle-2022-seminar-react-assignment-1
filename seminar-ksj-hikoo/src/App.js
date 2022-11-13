@@ -3,73 +3,64 @@ import Home from './components/Home';
 import Login from './components/Login';
 import AddPage from './components/AddPage';
 import EditPage from './components/EditPage';
-import React, { useState, createContext } from 'react';
-import { BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
+import React, { useState, createContext, useEffect } from 'react';
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import DetailPage from './components/DetailPage';
-
-
+import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
 
 export const IDContext = createContext();
 export const MenuContext = createContext();
 
-const initialMenu = [{
-  "id": 1,
-  "name": "초코와플",
-  "price": 7000,
-  "image": "",
-  "type": "waffle",
-  "description": "초코와플초코와플초코와플"
-},
-{
-  "id": 2,
-  "name": "아메리카노",
-  "price": 4000,
-  "image": "",
-  "type": "coffee",
-  "description": "아메리카노아메리카노아메리카노"
-},
-{
-  "id": 3,
-  "name": "블루베리스무디",
-  "price": 6000,
-  "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/Blueberries.jpg",
-  "type": "beverage",
-  "description": "블루베리스무디블루베리스무디블루베리스무디"
-},
-{
-  "id": 4,
-  "name": "딸기와플",
-  "price": 7000,
-  "image": "https://upload.wikimedia.org/wikipedia/commons/2/29/PerfectStrawberry.jpg",
-  "type": "waffle",
-  "description": "딸기와플딸기와플딸기와플"
-}]
-
-
 function App() {
 
-  const [LoginStatus, setLoginStatus] = useState({IsLogin:false, LoginID:"", LoginPW:""});
-  const [StoreId, setStoreId] = useState("");
-  const [maxId, setMaxId] = useState(5);
-  const [menuList, setMenu] = useState(initialMenu);
+  const [loginStatus, setLoginStatus] = useState({ IsLogin: false, LoginUser: "", UserID: "", Token: "" });
+  const [storeStatus, setStore] = useState({ id: "", name: "", owner: "" });
+  const [menuList, setMenu] = useState();
   const [selectMenu, setSelect] = useState("");
   const [search, setSearch] = useState("");
 
+  useEffect(() => {
+    const LoginRefresh = JSON.parse(localStorage.getItem('login'))
+    if (LoginRefresh != null) {
+      axios
+        .post("https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/auth/refresh", null, {
+          withCredentials: true
+        })
+        .then((res) => {
+          const token = res.data.access_token;
+          setLoginStatus({ IsLogin: true, LoginUser: LoginRefresh.username, UserID: LoginRefresh.id, Token: token })
+        })
+        .catch((error) => {
+          localStorage.removeItem("login")
+          setLoginStatus({ IsLogin: false, LoginUser: "", UserID: "", Token: "" })
+        });
+    }
+  }, [])
+
   return (
-    <IDContext.Provider value={{LoginStatus, setLoginStatus, StoreId, setStoreId}}>
-    <MenuContext.Provider value={{maxId, setMaxId, menuList, setMenu, selectMenu, setSelect, search, setSearch}}>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' exact element={<Home />} />
-          <Route path='/store/:storeid' element={<Store />} />
-          <Route path='/login' element={<Login/>} />
-          <Route path='/menus/:id' element={<DetailPage />} />
-          <Route path='/menus/new' element={<AddPage />}></Route>
-          <Route path='/menus/:id/edit' element={<EditPage />} />
-          <Route path="*" element={<Navigate to='/' />} />
-        </Routes>
-      </BrowserRouter>
-    </MenuContext.Provider>
+    <IDContext.Provider value={{ LoginStatus: loginStatus, setLoginStatus, StoreStatus: storeStatus, setStore }}>
+      <MenuContext.Provider value={{ menuList, setMenu, selectMenu, setSelect, search, setSearch }}>
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          closeOnClick={true}
+          pauseOnHover={false}
+          draggable={true}
+          theme="light" />
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' exact element={<Home />} />
+            <Route path='/store/:owner' element={<Store />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/menus/:id' element={<DetailPage />} />
+            <Route path='/menus/new' element={<AddPage />}></Route>
+            <Route path='/menus/:id/edit' element={<EditPage />} />
+            <Route path="*" element={<Navigate to='/' />} />
+          </Routes>
+        </BrowserRouter>
+      </MenuContext.Provider>
     </IDContext.Provider>
   );
 }

@@ -1,21 +1,16 @@
 import React, { useContext } from 'react'
-import { MenuContext, IDContext } from '../App';
+import { MenuContext } from '../App';
 import '../css/MenuBox1.css';
 import Menulist from './Menulist.js';
 import add from '../asset/add.svg';
 import logo from '../asset/waffle_logo.svg'
-import {useNavigate} from 'react-router-dom';
+import {useNavigate,useParams} from 'react-router-dom';
 
 function MenuBox1() {
   
-  const value = useContext(MenuContext);
-  const search = value.search
-  const menuList = value.menuList
-  const selectMenu = value.selectMenu
-  const setSelect = value.setSelect
-
-  const value2 = useContext(IDContext)
-  const LoginStatus = value2.LoginStatus
+  const { menuList, selectMenu, setSelect, search } = useContext(MenuContext);
+  const param = useParams();
+  const LoginRefresh = JSON.parse(localStorage.getItem('login'))
 
   const navigate = useNavigate()
 
@@ -33,9 +28,10 @@ function MenuBox1() {
           <div className='Name'><b>이름</b></div>
           <div className='Type'><b>종류</b></div>
           <div className='Price'><b>가격</b></div>
+          <div className='Rate'><b>평점</b></div>
         </div>
         <Menulist menuList={menuList} selectMenu={selectMenu} setSelect={setSelect} search={search}></Menulist>
-        {LoginStatus.isLogin && <img id='AddButton'src={add} alt={logo} onClick={() => OpenAddPage()}></img>}
+        {LoginRefresh!=null && LoginRefresh.id === Number(param.owner) && <img id='AddButton'src={add} alt={logo} onClick={() => OpenAddPage()}></img>}
 
       </div>
     </div>

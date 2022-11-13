@@ -34,7 +34,7 @@
   }
   
   .MenuName {
-    flex: 3;
+    flex: 6;
   }
   
   .MenuType {
@@ -42,5 +42,9 @@
   }
   
   .MenuPrice {
-    flex: 5;
+    flex: 4;
+  }
+
+  .MenuRate{
+    flex: 7;
   }

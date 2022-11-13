@@ -9,19 +9,25 @@
 }
 
 .Title {
-  flex: 3;
+  flex: 4;
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
 .LoginTap {
-  flex: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  margin-right: 30px;
+}
+
+.LoginButtonArea{
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  margin-right: 20px;
 }
 
 .Logo {
@@ -34,25 +40,64 @@
   color: black;
 }
 
+.storeTitle {
+  text-decoration: none;
+  color: black;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.storeTitleTop{
+  flex:1;
+  margin: 0px 0px 3px 5px; line-height: 120%;
+}
+
+.storeTitleBottom {
+  flex:2 ;
+  margin: 7px 0px 0px 0px; line-height: 120%;
+  text-decoration: none;
+  color: black;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 20px;
+}
+
+.storeOwner {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  color: #8A8A8A;
+  margin-left: 5px;
+}
 
 .LoginButton {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60px;
-  height: 18px;
+  width: 55px;
+  height: 24px;
   border: 0.5px gray solid;
   border-radius: 3px;
   background-color: white;
-  margin: 0px 3px;
+  margin: 0px 5px;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
-  font-size: 11px;
+  font-size: 10px;
   line-height: 20px;
 }
 
 .LoginStatus {
+  margin: 0px 0px 3px 5px;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
@@ -61,6 +106,6 @@
   margin-right: 5px;
 }
 
-.LoginIdBold{
+.LoginIdBold {
   font-weight: bolder
 }

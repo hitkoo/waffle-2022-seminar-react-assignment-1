@@ -4,37 +4,51 @@ import Head from './Head';
 import { useContext } from 'react';
 import { IDContext } from '../App';
 import { useNavigate } from 'react-router-dom';
-
+import axios from "axios";
+import { toast } from 'react-toastify';
 
 
 function Login() {
 
     const navigate = useNavigate();
     const value = useContext(IDContext)
-    const LoginStatus = value.LoginStatus
     const setLoginStatus = value.setLoginStatus
     const [inputs, setInputs] = useState({ ID: "", PW: "" });
     const changeInputs = (e) => {
-        const {name, value} = e.target
+        const { name, value } = e.target
         setInputs({ ...inputs, [name]: value });
     }
 
     const Login = () => {
         if (inputs.ID !== "" && inputs.PW !== "") {
-            setLoginStatus({isLogin : true, LoginID : inputs.ID, LoginPW: inputs.PW});
-            navigate(-1);
+            axios
+                .post("https://ah9mefqs2f.execute-api.ap-northeast-2.amazonaws.com/auth/login", {
+                    username: inputs.ID,
+                    password: inputs.PW
+                }, {
+                    withCredentials: true
+                })
+                .then((res) => {
+                    const token = res.data.access_token;
+                    setLoginStatus({ isLogin: true, LoginUser: res.data.owner.username, UserID:Number(res.data.owner.id), Token: token});
+                    localStorage.setItem('login', JSON.stringify(res.data.owner))
+                    navigate(-1);
+                })
+                .catch((error)=>{
+                    toast.warn('아이디 혹은 비밀번호가 잘못됐습니다');
+                });               
         }
         else {
-            alert("아이디와 비밀번호를 입력하세요")
+            toast.warn('아이디와 비밀번호를 입력해주세요');
         }
     }
 
     useEffect(() => {
-        if (LoginStatus.LoginID) {
-            alert("로그인 되어있습니다.")
-            navigate(-1)
+        if (localStorage.getItem('login') !=  null) {
+            toast.warn('이미 로그인 되어있습니다');
+            navigate(`/`)
         }
-    },[])
+    }, [])
 
     return (
         <div className='LoginWrap'>
@@ -52,7 +66,7 @@ function Login() {
                                 <input className='LoginInput' name='PW' placeholder='비밀번호를 입력하세요.' onChange={changeInputs}></input></p>
                         </div>
                         <div className='LoginRight'>
-                            <button ID='LoginButton' onClick={() => Login()}>로그인</button>
+                            <button id='LoginButton' onClick={() => Login()}>로그인</button>
                         </div>
                     </div>
                 </div>
