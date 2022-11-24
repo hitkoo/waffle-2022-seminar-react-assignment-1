@@ -1,0 +1,121 @@
+.AddWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .buttonfix {
+        position: relative;
+
+        .container {
+            margin-top: 100px;
+            border: 1px solid;
+            flex-direction: column;
+            padding: 20px;
+            background: #FFFFFF;
+            border-radius: 10px;
+            width: 400px;
+            height: 50vh;
+            overflow: scroll;
+
+            b {
+                font-size: x-large;
+                height: 70px;
+                margin-bottom: 5%;
+            }
+
+            p {
+                width: 80%;
+                height: 18px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                font-weight: bolder;
+            }
+
+            input {
+                padding-left: 10px;
+                width: 95%;
+                height: 30px;
+                border: solid 0.5px #999999;
+                border-radius: 5px;
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 15px;
+                line-height: 18px;
+            }
+
+            textarea {
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 15px;
+                line-height: 18px;
+                padding-top: 5px;
+                padding-left: 10px;
+                width: 95%;
+                height: 100px;
+                border: solid 0.5px #999999;
+                border-radius: 5px;
+                resize: none;
+            }
+
+            #typeno {
+                color: gray;
+                padding-left: 10px;
+                width: 98.5%;
+                height: 33px;
+                border: solid 0.5px #999999;
+                border-radius: 5px;
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 15px;
+                line-height: 18px;
+            }
+
+            #typeno option {
+                color: black;
+            }
+
+            #type {
+                color: black;
+                padding-left: 10px;
+                width: 98.5%;
+                height: 33px;
+                border: solid 0.5px #999999;
+                border-radius: 5px;
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 15px;
+                line-height: 18px;
+            }
+
+            .buttonArea {
+                position: absolute;
+                bottom: -50px;
+                margin-top: 10px;
+                width: 90%;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+
+                button {
+                    margin: 0px 5px;
+                    width: 50px;
+                    height: 30px;
+                    border-radius: 5px;
+                    border: solid 0.2px #999999;
+                }
+
+                button:hover {
+                    cursor: pointer;
+                }
+            }
+
+        }
+    }
+}

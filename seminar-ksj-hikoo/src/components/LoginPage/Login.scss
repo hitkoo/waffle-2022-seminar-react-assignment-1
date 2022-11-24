@@ -1,0 +1,96 @@
+.LoginWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 95vh;
+
+    .LoginContainer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        flex: 9;
+        width: 93%;
+
+        .LoginBox {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            width: 550px;
+            height: 130px;
+            border: solid 1px;
+            background: #FFFFFF;
+            border: 1px solid #000000;
+            border-radius: 10px;
+
+            .LoginTitle {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 24px;
+                line-height: 18px;
+            }
+
+            .LoginSubtitle {
+                display: flex;
+                flex-direction: row;
+                flex: 2;
+
+                .LoginLeft {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    flex: 4;
+
+                    p {
+                        width: 100%;
+                        height: 12%;
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+
+                        span {
+                            flex: 1;
+                            font-style: normal;
+                            font-weight: 600;
+                            font-size: 15px;
+                            line-height: 18px;
+                        }
+
+                        input {
+                            flex: 3;
+                            padding-left: 10px;
+                            height: 200%;
+                            border: solid 1px;
+                            border-radius: 5px;
+                        }
+                    }
+                }
+
+                .LoginRight {
+                    padding: 10px;
+                    flex: 1;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    button {
+                        width: 90%;
+                        height: 90%;
+                        border: solid 1px;
+                        border-radius: 5px;
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 15px;
+                        background-color: #FFFFFF;
+                    }
+                }
+            }
+        }
+    }
+}
