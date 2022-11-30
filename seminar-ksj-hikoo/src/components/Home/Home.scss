@@ -53,13 +53,14 @@
             .storeRate {
                 flex: 2;
             }
-
-            .Store:hover {
-                animation-duration: 0.25s;
-                animation-timing-function: ease-out;
-                animation-name: mouseover;
-                animation-fill-mode: forwards;
-            }
+           
+        }
+        .Store:hover {
+            animation-duration: 0.25s;
+            animation-timing-function: ease-out;
+            animation-name: mouseover;
+            animation-fill-mode: forwards;
+            cursor: pointer;
         }
     }
 }

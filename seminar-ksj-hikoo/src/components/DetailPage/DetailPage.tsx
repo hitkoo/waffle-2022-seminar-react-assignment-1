@@ -56,7 +56,11 @@ function DetailPage () {
             </div>
             <div className='DetailContainer'>
                 <div className='DetailLeft'>
-                    <img className='selectimage' src={ThisPageMenu.image} alt={logo}/>
+                    <img className='selectimage' src={ThisPageMenu.image} alt={""} onError={(e) => {
+                    if (e.target instanceof HTMLImageElement) {
+                        e.target.src = logo;
+                    }
+                }}/>
                     <p className='selectname'>{ThisPageMenu.name}</p>
                     <p className='selecttype'>{typetotext(ThisPageMenu.type)}</p>
                     <p className='selectprice'>{ThisPageMenu.price.toLocaleString()}원</p>

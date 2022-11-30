@@ -65,7 +65,7 @@ function Login() {
                             <p><span>ID</span>
                                 <input name='ID' placeholder='아이디를 입력하세요.' onChange={changeInputs} ></input></p>
                             <p ><span>PASSWORD</span>
-                                <input name='PW' placeholder='비밀번호를 입력하세요.' onChange={changeInputs}></input></p>
+                                <input name='PW' type="password" placeholder='비밀번호를 입력하세요.' onChange={changeInputs}></input></p>
                         </div>
                         <div className='LoginRight'>
                             <button id='LoginButton' onClick={() => Login()}>로그인</button>
